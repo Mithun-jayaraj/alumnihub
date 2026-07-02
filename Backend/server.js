@@ -18,12 +18,29 @@ app.use(express.json());
 
 const otpStorage = {};
 
+const EMAIL_USER = process.env.EMAIL_USER;
+const EMAIL_PASS = process.env.EMAIL_PASS;
+
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
-    user: process.env.EMAIL_USER || "abishek3834@gmail.com",
-    pass: process.env.EMAIL_PASS || "nwmdflkbiibgrpwi",
+    user: EMAIL_USER,
+    pass: EMAIL_PASS,
   },
+});
+
+if (!EMAIL_USER || !EMAIL_PASS) {
+  console.error("Missing EMAIL_USER or EMAIL_PASS in environment. OTP email will not send until configured.");
+}
+
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("Email transporter verification failed:", error.message || error);
+  } else {
+    console.log("Email transporter is ready to send OTP emails.");
+  }
 });
 
 // OTP Routes
@@ -34,17 +51,21 @@ app.post("/generate-otp", (req, res) => {
     return res.status(400).json({ message: "Email is required!" });
   }
 
+  if (!EMAIL_USER || !EMAIL_PASS) {
+    return res.status(500).json({ message: "Email service is not configured. Set EMAIL_USER and EMAIL_PASS in Backend/.env." });
+  }
+
   const otp = Math.floor(1000 + Math.random() * 9000).toString();
   otpStorage[email] = otp;
 
   const mailOptions = {
-    from: "your-email@gmail.com",
+    from: EMAIL_USER || "no-reply@alumnis-hub.com",
     to: email,
     subject: "Your OTP for Alumnis-Hub",
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
         <h2 style="text-align: center; color: #6c24a4;">Welcome to Alumnis-Hub🎉</h2>
-        <p>Hello,${Name}</p>
+        <p>Hello, ${Name}</p>
         <p>Your OTP for verification is:</p>
         <div style="text-align: center; margin: 20px 0; font-size: 24px; font-weight: bold; color: #4CAF50;">${otp}</div>
         <p>This OTP is valid for <strong>10 minutes</strong>. Please do not share it with anyone.</p>
@@ -58,10 +79,14 @@ app.post("/generate-otp", (req, res) => {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error("Error sending email:", error);
-      return res.status(500).json({ message: "Failed to send OTP email." });
+      return res.status(200).json({
+        message: "OTP generated but email failed to send. Use OTP from response for now.",
+        otp,
+        emailSent: false,
+      });
     }
     console.log("OTP sent successfully:", info.response);
-    res.status(200).json({ message: "OTP sent successfully!", otp });
+    res.status(200).json({ message: "OTP sent successfully!", otp, emailSent: true });
   });
 });
 
