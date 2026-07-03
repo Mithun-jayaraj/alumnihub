@@ -14,6 +14,8 @@ const RootPage = () => {
   const [color, setColor] = useState(false);
   const [Loading, setLoading] = useState(false);
   const [email1, setEmail] = useState(false);
+  const [emailSent, setEmailSent] = useState(true);
+  const [emailDeliveryError, setEmailDeliveryError] = useState('');
   const [userdata, setUserdata] = useState(false);
   const emailref = useRef(null);
   const [Redirect,SetRedirect]=useState(false);
@@ -116,7 +118,8 @@ const RootPage = () => {
   };
   const sendMail = async (email,Name) => {
     try {
-      const response = await fetch("/generate-otp", {
+      const apiBaseUrl = window.API_BASE_URL || '';
+    const response = await fetch(`${apiBaseUrl}/generate-otp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -127,11 +130,14 @@ const RootPage = () => {
       const result = await response.json();
       if (response.ok) {
         setGeneratedOtp(result.otp);
-         console.log("Generated OTP:", result.otp);
+        setEmailSent(result.emailSent !== false);
+        setEmailDeliveryError(result.emailSent === false ? result.message : '');
+        console.log("Generated OTP:", result.otp);
         setEmail(false);
       } else {
-        // console.error("Error generating OTP:", result.message);
         setEmail(true);
+        setEmailSent(false);
+        setEmailDeliveryError(result.message || 'Failed to generate OTP.');
       }
     } catch (error) {
       console.error("Error sending OTP:", error);
@@ -242,7 +248,10 @@ const RootPage = () => {
             ) : (
               <>
                 <div className='w-full flex justify-center flex-col items-center space-y-5 p-10'>
-                  <p className=''>OTP is sent to <span className='text-green-500 font-bold'>{userdata.Email}</span></p>
+                      <p className=''>OTP is sent to <span className='text-green-500 font-bold'>{userdata.Email}</span></p>
+                  {!emailSent && (
+                    <p className='text-yellow-600 font-bold'>Email delivery failed. Use the OTP shown in console or app response.</p>
+                  )}
                   <Otpbox length={4} onChangeOTP={handleChangeOTP} Correct={correct} />
                 </div>
               </>

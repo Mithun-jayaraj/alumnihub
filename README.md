@@ -44,21 +44,23 @@
    ```
 
 2. **Backend Setup**  
-   - Navigate to the `server` directory:  
+   - Navigate to the `Backend` directory:  
      ```bash
-     cd server
+     cd Backend
      ```
    - Install dependencies:  
      ```bash
      npm install
      ```
    - Create a `.env` file and configure the following variables:
-     ```
+     ```bash
      MONGO_URI=<your-mongodb-connection-string>
-     EMAIL_USER=<your-email-address>
-     EMAIL_PASS=<your-email-password>
-     JWT_SECRET=<your-jwt-secret-key>
+     EMAIL_USER=<your-gmail-address>
+     EMAIL_PASS=<your-gmail-app-password>
+     CLIENT_URL=http://localhost:5173
      ```
+     - For Gmail, generate an App Password in your Google account security settings.
+     - Do not use your normal Gmail password unless you have enabled less secure app access.
    - Start the backend server:  
      ```bash
      npm start
@@ -73,16 +75,29 @@
      ```bash
      npm install
      ```
+   - Create a `.env` file with your API base URL for production only:
+     ```bash
+     VITE_API_BASE_URL=http://localhost:5000
+     ```
    - Start the frontend server:  
      ```bash
-     npm start
+     npm run dev
      ```
 
 4. **Access the Application**  
    Open your browser and navigate to:  
+   ```bash
+   http://localhost:5173
    ```
-   http://localhost:3000
-   ```
+
+---
+
+## Deployment
+
+- Frontend: Deploy the `seniorscommunity` folder to Vercel. Set `VITE_API_BASE_URL` in Vercel Environment Variables to your backend URL.
+- Backend: Deploy the `Backend` folder to Render as a Node web service. Set `MONGO_URI`, `EMAIL_USER`, `EMAIL_PASS`, and `CLIENT_URL` in Render Environment Variables.
+
+> If you deploy frontend and backend separately, the frontend will call the backend via the environment variable `VITE_API_BASE_URL`.
 
 ---
 
