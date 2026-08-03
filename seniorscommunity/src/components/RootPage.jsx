@@ -118,7 +118,7 @@ const RootPage = () => {
   };
   const sendMail = async (email,Name) => {
     try {
-      const apiBaseUrl = window.API_BASE_URL || '';
+      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
     const response = await fetch(`${apiBaseUrl}/generate-otp`, {
         method: "POST",
         headers: {

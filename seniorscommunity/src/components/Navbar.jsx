@@ -65,9 +65,6 @@ export const Navbar = () => {
           <div className='h-10 border-2 border-white p-3 text-center justify-center items-center flex text-white bg-zinc-800'>
             Settings
           </div>
-          <div className='h-10 border-2 border-white p-3 text-center justify-center items-center flex text-white bg-zinc-800' >
-           <a href="https://codewithabi.vercel.app" target='_blank' className='w-full h-full flex justify-center items-center'> About us</a>
-          </div>
         </div>
       )}
     </>
