@@ -1,9 +1,10 @@
 import { ChevronDown, ChevronUp, UserCircleIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Gitdata } from '../store'
 
 export const Navbar = () => {
+  const navigate = useNavigate()
   const [downbar, setDownbar] = useState(false)
   const [user, setUser] = useState(false)
   const [image, setImage] = useState('')
@@ -19,6 +20,12 @@ export const Navbar = () => {
 
   const handleDownbar = () => {
     setDownbar(prevState => !prevState)
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('completeUser')
+    localStorage.removeItem('data')
+    navigate('/')
   }
 
   let UserData = localStorage.getItem('data')
@@ -65,6 +72,12 @@ export const Navbar = () => {
           <div className='h-10 border-2 border-white p-3 text-center justify-center items-center flex text-white bg-zinc-800'>
             Settings
           </div>
+          <button
+            onClick={handleLogout}
+            className='h-10 border-2 border-white p-3 text-center justify-center items-center flex text-white bg-zinc-800 hover:bg-red-600'
+          >
+            Logout
+          </button>
         </div>
       )}
     </>
