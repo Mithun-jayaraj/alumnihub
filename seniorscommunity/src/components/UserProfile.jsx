@@ -112,8 +112,16 @@ const UserProfile = () => {
     fetchAllData();
   }, []);
 
-  const githubUrl = userData?.Github ? `https://github.com/${userData.Github}/` : "#";
-  const leetcodeUrl = userData?.Leetcode ? `https://leetcode.com/u/${userData.Leetcode}/` : "#";
+  const githubUrl = userData?.Github
+    ? userData.Github.match(/^https?:\/\//i)
+      ? userData.Github
+      : `https://github.com/${userData.Github}/`
+    : "#";
+  const leetcodeUrl = userData?.Leetcode
+    ? userData.Leetcode.match(/^https?:\/\//i)
+      ? userData.Leetcode
+      : `https://leetcode.com/u/${userData.Leetcode}/`
+    : "#";
   const linkedinUrl = userData?.Linkedin || "#";
 
   const formatDate = (date) => {

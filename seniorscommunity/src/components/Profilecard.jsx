@@ -135,8 +135,16 @@ const Profilecard = () => {
     });
   };
 
-  const githubUrl = data ? `https://github.com/${data.userdata.Github}/` : "#";
-  const leetcodeUrl = data ? `https://leetcode.com/u/${data.userdata.Leetcode}/` : "#";
+  const githubUrl = data
+    ? data.userdata.Github?.match(/^https?:\/\//i)
+      ? data.userdata.Github
+      : `https://github.com/${data.userdata.Github}/`
+    : "#";
+  const leetcodeUrl = data
+    ? data.userdata.Leetcode?.match(/^https?:\/\//i)
+      ? data.userdata.Leetcode
+      : `https://leetcode.com/u/${data.userdata.Leetcode}/`
+    : "#";
   const linkedinUrl = data?.userdata.Linkedin || "#";
 
   if (!data) {

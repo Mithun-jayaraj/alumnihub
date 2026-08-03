@@ -262,7 +262,7 @@ const Home = () => {
           <div className='flex items-center justify-center gap-2 mb-4'>
             {user.Github && (
               <a
-                href={`https://github.com/${user.Github}`}
+                href={user.Github.match(/^https?:\/\//i) ? user.Github : `https://github.com/${user.Github}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
@@ -273,7 +273,7 @@ const Home = () => {
             )}
             {user.Linkedin && (
               <a
-                href={user.Linkedin}
+                href={user.Linkedin.match(/^https?:\/\//i) ? user.Linkedin : `https://www.linkedin.com/in/${user.Linkedin.replace(/^@/, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}

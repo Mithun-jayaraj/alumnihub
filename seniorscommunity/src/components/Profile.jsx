@@ -35,29 +35,35 @@ const Profile = () => {
       if (!userData?.Email) {
         throw new Error("User data is missing!");
       }
-       if(!linkedinRef.current.value||!githubRef.current.value||!leetcodeRef.current.value)
-       {
+      const linkedinRaw = linkedinRef.current.value.trim();
+      const githubRaw = githubRef.current.value.trim();
+      const leetcodeRaw = leetcodeRef.current.value.trim();
+
+      if (!linkedinRaw || !githubRaw || !leetcodeRaw) {
         const notify = () => toast('Please fill all the details');
         notify();
-          return;
-       }
-       if(leetcodeRef.current.value.length>15)
-       {
+        return;
+      }
+
+      if (leetcodeRaw.length > 15) {
         const notify1 = () => toast('Leetcode username should be enter!');
         notify1();
-          return;
-       }
-       if(githubRef.current.value.length>15)
-        {
-      const notify2 = () => toast('Github username should be enter!');
-       notify2();
-           return;
-        }
+        return;
+      }
+
+      const githubUsername = githubRaw.match(/github\.com\/([^/]+)/i)
+        ? githubRaw.match(/github\.com\/([^/]+)/i)[1]
+        : githubRaw.replace(/^@/, '');
+
+      const linkedinUrl = linkedinRaw.match(/^https?:\/\//i)
+        ? linkedinRaw
+        : `https://www.linkedin.com/in/${linkedinRaw.replace(/^@/, '')}`;
+
       const obj = {
         id: userData.Email,
-        Linkedin: linkedinRef.current.value,
-        Github: githubRef.current.value,
-        Leetcode: leetcodeRef.current.value,
+        Linkedin: linkedinUrl,
+        Github: githubUsername,
+        Leetcode: leetcodeRaw,
       };
 
       const res = await axios.post(
