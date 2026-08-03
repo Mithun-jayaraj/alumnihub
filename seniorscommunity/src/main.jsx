@@ -3,7 +3,7 @@ import axios from 'axios'
 import App from './App.jsx'
 import './index.css'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.trim() || ''
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL?.trim() || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:5001' : '')).trim()
 if (API_BASE_URL) {
   axios.defaults.baseURL = API_BASE_URL
   window.API_BASE_URL = API_BASE_URL

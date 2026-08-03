@@ -5,12 +5,12 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = Number(process.env.PORT || 5001);
 
 require('./connection/conn');
 
 app.use(cors({
-  origin: [process.env.CLIENT_URL || 'http://localhost:5173', 'http://localhost:3000'],
+  origin: [process.env.CLIENT_URL || 'http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
   credentials: true
 }));
 app.use(bodyParser.json());
@@ -18,8 +18,8 @@ app.use(express.json());
 
 const otpStorage = {};
 
-const EMAIL_USER = process.env.EMAIL_USER;
-const EMAIL_PASS = process.env.EMAIL_PASS;
+const EMAIL_USER = process.env.EMAIL_USER?.trim();
+const EMAIL_PASS = process.env.EMAIL_PASS?.replace(/\s+/g, '').trim();
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -148,7 +148,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);
   console.log(`📝 Blog routes available at http://localhost:${PORT}/api/v1/blogs`);
 });
