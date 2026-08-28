@@ -39,8 +39,8 @@
 
 1. **Clone the Repository**  
    ```bash
-  git clone https://github.com/Mithun-jayaraj/alumnihub.git
-   cd alumnihub
+     git clone https://github.com/Mithun-jayaraj/alumnihub.git
+     cd alumnihub
    ```
 
 2. **Backend Setup**  
