@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Navbar } from './Navbar'
 import ProfilePic from '../assets/mithun.png'
+import HeroCampus from '../assets/hero_campus_1788374855248.jpg'
+import FeatureNetworking from '../assets/feature_1_1788374926745.jpg'
+import FeatureMentorship from '../assets/feature_2_1788374938959.jpg'
+import FeatureOpportunities from '../assets/feature_3_1788374955350.jpg'
 import Otpbox from './Otpbox'
 import {useNavigate, Link} from 'react-router-dom'
 import axios from 'axios'
@@ -181,7 +185,7 @@ const RootPage = () => {
         {/* Real Campus Image Background */}
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/src/assets/hero_campus_1788374855248.jpg')" }}
+          style={{ backgroundImage: `url(${HeroCampus})` }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-b from-primary-900/80 via-primary-900/60 to-slate-50"></div>
         
@@ -250,7 +254,7 @@ const RootPage = () => {
             {/* Feature 1 */}
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 group">
               <div className="h-48 overflow-hidden relative">
-                <img src="/src/assets/feature_1_1788374926745.jpg" alt="Networking" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={FeatureNetworking} alt="Networking" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 flex items-center gap-2">
                   <div className="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold">1</div>
@@ -265,7 +269,7 @@ const RootPage = () => {
             {/* Feature 2 */}
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 group">
               <div className="h-48 overflow-hidden relative">
-                <img src="/src/assets/feature_2_1788374938959.jpg" alt="Mentorship" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={FeatureMentorship} alt="Mentorship" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 flex items-center gap-2">
                   <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">2</div>
@@ -280,7 +284,7 @@ const RootPage = () => {
             {/* Feature 3 */}
             <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 group">
               <div className="h-48 overflow-hidden relative">
-                <img src="/src/assets/feature_3_1788374955350.jpg" alt="Opportunities" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={FeatureOpportunities} alt="Opportunities" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 flex items-center gap-2">
                   <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">3</div>

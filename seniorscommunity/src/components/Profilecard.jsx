@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState, useRef } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
+import ProfileCover from '../assets/profile_cover_1788374881248.jpg';
 import { 
   Loader2, 
   Linkedin, 
@@ -183,7 +184,7 @@ const Profilecard = () => {
                   {/* Header with Cover Image */}
                   <div 
                     className="bg-primary-700 h-32 sm:h-48 relative bg-cover bg-center"
-                    style={{ backgroundImage: "url('/src/assets/profile_cover_1788374881248.jpg')" }}
+                    style={{ backgroundImage: `url(${ProfileCover})` }}
                   >
                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
                   </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from './Navbar'
 import {Link} from 'react-router-dom'
+import AuthNetworking from '../assets/auth_networking_1788374869376.jpg'
 
 export const Signin = () => {
    const [Loading,setLoading]=useState(false);
@@ -27,7 +28,7 @@ export const Signin = () => {
         <div className="hidden lg:flex w-1/2 relative bg-primary-900 overflow-hidden">
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay"
-            style={{ backgroundImage: "url('/src/assets/auth_networking_1788374869376.jpg')" }}
+            style={{ backgroundImage: `url(${AuthNetworking})` }}
           ></div>
           <div className="absolute inset-0 bg-gradient-to-t from-primary-900/90 to-transparent"></div>
           
