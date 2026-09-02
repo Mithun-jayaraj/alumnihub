@@ -123,73 +123,85 @@ const StudCard = (props) => {
     <>
     {
       loading?(
-        <div className="w-[300px] h-[300px] bg-slate-400/20 backdrop-blur-3xl rounded-lg flex flex-col justify-start items-center mt-5 space-y-4">
-          <div className='w-[80%] h-9 bg-slate-400/20 flex justify-start animate-pulse'>
- 
+        <div className="w-[300px] bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center p-6 space-y-4 animate-pulse">
+          <div className='w-3/4 h-6 bg-slate-200 rounded-md'></div>
+          <div className='w-1/2 h-4 bg-slate-200 rounded-md'></div>
+          <div className="w-32 h-32 rounded-full bg-slate-200 mt-4"></div>
+          <div className="w-full flex justify-between gap-3 mt-6">
+             <div className="w-1/2 h-10 bg-slate-200 rounded-xl"></div>
+             <div className="w-1/2 h-10 bg-slate-200 rounded-xl"></div>
           </div>
-          <div className="w-full flex justify-center items-center">
-            <div
-              className="w-40 h-40 rounded-full bg-slate-400/20 animate-pulse"
-            />
-        </div>
         </div>
       ):(
-        <div className="w-[300px] h-[300px] bg-slate-400/20 backdrop-blur-3xl rounded-lg flex flex-col justify-center mt-5">
-        <div className="w-full flex justify-between p-2">
-          <p className="text-2xl text-white" >{props.props.Name}</p>
-          <p className="text-2xl text-white">
-            {props.props.Year}-{props.props.Department}
-          </p>
-        </div>
-        <div className="w-full flex justify-center items-center">
-          {gitData ? (
-            <img
-              src={gitData.avatar_url || profile}
-              alt={`${data?.Github}'s Avatar`}
-              className="w-40 h-40 rounded-full"
-            />
-          ) : (
-            <Loader2Icon className="text-white animate-spin" />
-          )}
-        </div>
-        <div className="w-full flex justify-between p-2">
-          {!isFollow ? (
-            <button
-              disabled={load}
-              className={`w-[100px] rounded-lg h-[35px] text-white ${
-                load ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700'
-              }`}
-              onClick={handleFollow}
-            >
-              {load ? 
-              <div className='w-full flex justify-center'>
-                 <Loader2Icon className="animate-spin" /> 
+        <div className="w-[300px] bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col p-6 m-2 relative overflow-hidden group">
+          
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-400 to-primary-600"></div>
+          
+          <div className="w-full text-center mb-4">
+            <h3 className="text-xl font-bold text-slate-900 truncate" title={props.props.Name}>{props.props.Name}</h3>
+            <p className="text-sm font-medium text-slate-500 bg-slate-50 inline-block px-3 py-1 rounded-full mt-2">
+              {props.props.Year} • {props.props.Department}
+            </p>
+          </div>
+          
+          <div className="w-full flex justify-center items-center my-4 relative">
+            <div className="absolute inset-0 bg-primary-50 rounded-full scale-110 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            {gitData ? (
+              <img
+                src={gitData.avatar_url || profile}
+                alt={`${data?.Github}'s Avatar`}
+                className="w-32 h-32 rounded-full border-4 border-white shadow-md relative z-10 object-cover bg-white"
+              />
+            ) : (
+              <div className="w-32 h-32 rounded-full border-4 border-white shadow-md relative z-10 bg-slate-50 flex items-center justify-center">
+                <Loader2Icon className="text-primary-500 animate-spin w-8 h-8" />
               </div>
-              : 'Follow'}
-            </button>
-          ) : (
+            )}
+          </div>
+          
+          <div className="w-full flex gap-3 mt-4">
+            {!isFollow ? (
+              <button
+                disabled={load}
+                className={`flex-1 rounded-xl h-[42px] font-semibold text-sm transition-all shadow-sm ${
+                  load 
+                    ? 'bg-slate-100 text-slate-400 cursor-not-allowed' 
+                    : 'bg-white border-2 border-primary-600 text-primary-600 hover:bg-primary-50'
+                }`}
+                onClick={handleFollow}
+              >
+                {load ? (
+                  <div className='w-full flex justify-center'>
+                    <Loader2Icon className="animate-spin w-5 h-5" /> 
+                  </div>
+                ) : '+ Follow'}
+              </button>
+            ) : (
+              <button
+                disabled={load}
+                className={`flex-1 rounded-xl h-[42px] font-semibold text-sm transition-all shadow-sm ${
+                  load 
+                    ? 'bg-slate-100 text-slate-400 cursor-not-allowed' 
+                    : 'bg-white border-2 border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                }`}
+                onClick={handleUnFollow}
+              >
+                {load ? (
+                  <div className='w-full flex justify-center'>
+                    <Loader2Icon className="animate-spin w-5 h-5" /> 
+                  </div> 
+                ) : 'Following'}
+              </button>
+            )}
+            
             <button
-              disabled={load}
-              className={`w-[100px] rounded-lg h-[35px] text-white ${
-                load ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#484545]'
-              }`}
-              onClick={handleUnFollow}
+              className="flex-1 bg-primary-600 hover:bg-primary-700 text-white font-semibold text-sm rounded-xl h-[42px] transition-all shadow-sm shadow-primary-600/20"
+              onClick={sendProps}
             >
-              {load ? 
-              <div className='w-full flex justify-center'>
-                 <Loader2Icon className="animate-spin" /> 
-              </div> 
-              : 'Un-Follow'}
+              Profile
             </button>
-          )}
-          <button
-            className="w-[100px] bg-orange-500 text-white rounded-lg h-[35px] hover:opacity-90"
-            onClick={sendProps}
-          >
-            View profile
-          </button>
+          </div>
         </div>
-      </div>
       )
     }
    

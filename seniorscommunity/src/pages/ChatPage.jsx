@@ -186,109 +186,116 @@ const getUnreadCountSafe = (chat, userEmail) => {
   }
 
   return (
-    <>
+    <div className='h-screen bg-slate-50 flex flex-col font-sans overflow-hidden'>
       <Navbar />
-      <div className='h-screen bg-gradient-to-br from-[#121212] via-[#1a1a1a] to-[#121212] flex flex-col'>
-        {/* Header */}
-        <div className='bg-[#1a1a1a] border-b border-gray-800 p-4'>
-          <div className='max-w-7xl mx-auto flex items-center gap-4'>
-            <button
-              onClick={() => navigate('/home')}
-              className='text-gray-400 hover:text-white transition-colors'
-            >
-              <ArrowLeft className='w-6 h-6' />
-            </button>
-            <h1 className='text-2xl font-bold text-white'>Messages</h1>
-          </div>
-        </div>
-
+      
+      <div className='flex-1 flex overflow-hidden'>
         {/* Main Chat Area */}
-        <div className='flex-1 flex overflow-hidden max-w-7xl mx-auto w-full'>
+        <div className='flex-1 flex overflow-hidden max-w-[1600px] mx-auto w-full border-x border-slate-200 bg-white shadow-sm'>
+          
           {/* Chat List Sidebar */}
-          <div className='w-full sm:w-96 bg-[#1a1a1a] border-r border-gray-800 flex flex-col'>
-            {/* Search Bar */}
-            <div className='p-4 border-b border-gray-800'>
+          <div className='w-full sm:w-80 md:w-96 bg-white border-r border-slate-200 flex flex-col z-10 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]'>
+            
+            {/* Sidebar Header & Search */}
+            <div className='p-4 border-b border-slate-100'>
+              <div className='flex items-center gap-3 mb-4'>
+                <button
+                  onClick={() => navigate('/home')}
+                  className='text-slate-400 hover:text-slate-700 transition-colors p-2 hover:bg-slate-50 rounded-full'
+                >
+                  <ArrowLeft className='w-5 h-5' />
+                </button>
+                <h1 className='text-xl font-bold text-slate-900'>Messages</h1>
+              </div>
               <div className='relative'>
-                <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
+                <Search className='absolute left-3.5 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4' />
                 <input
                   type='text'
                   placeholder='Search conversations...'
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className='w-full pl-10 pr-4 py-2 bg-[#2a2a2a] text-white rounded-xl border border-gray-700 focus:border-orange-400 focus:outline-none transition-all'
+                  className='w-full pl-10 pr-4 py-2.5 bg-slate-50 text-slate-900 rounded-xl border border-slate-200 focus:border-primary-500 focus:bg-white focus:ring-4 focus:ring-primary-500/10 focus:outline-none transition-all text-sm font-medium'
                 />
               </div>
             </div>
 
             {/* Chats List */}
-            <div className='flex-1 overflow-y-auto'>
+            <div className='flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-slate-200 hover:scrollbar-thumb-slate-300'>
               {filteredChats.length === 0 ? (
                 <div className='flex flex-col items-center justify-center h-full text-center p-8'>
-                  <MessageCircle className='w-16 h-16 text-gray-600 mb-4' />
-                  <p className='text-gray-400 text-lg'>No conversations yet</p>
-                  <p className='text-gray-600 text-sm mt-2'>Start chatting with your network</p>
+                  <div className='w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4'>
+                    <MessageCircle className='w-8 h-8 text-slate-400' />
+                  </div>
+                  <p className='text-slate-900 font-semibold mb-1'>No conversations yet</p>
+                  <p className='text-slate-500 text-sm'>Start chatting with your network</p>
                 </div>
               ) : (
-                filteredChats.map((chat) => (
-                  <ChatCard
-                    key={chat._id}
-                    chat={chat}
-                    currentUserEmail={currentUserEmail}
-                    onClick={() => setSelectedChat(chat)}
-                    isActive={selectedChat?._id === chat._id}
-                  />
-                ))
+                <div className="py-2">
+                  {filteredChats.map((chat) => (
+                    <ChatCard
+                      key={chat._id}
+                      chat={chat}
+                      currentUserEmail={currentUserEmail}
+                      onClick={() => setSelectedChat(chat)}
+                      isActive={selectedChat?._id === chat._id}
+                    />
+                  ))}
+                </div>
               )}
             </div>
           </div>
 
           {/* Chat Messages Area */}
-          <div className='flex-1 flex flex-col bg-[#121212]'>
+          <div className='flex-1 flex flex-col bg-slate-50/50 relative'>
             {selectedChat ? (
               <>
                 {/* Chat Header */}
-                <div className='bg-[#1a1a1a] border-b border-gray-800 p-4'>
-                  <div className='flex items-center justify-between'>
-                    <div className='flex items-center gap-3'>
-                      <div className='w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold'>
+                <div className='bg-white border-b border-slate-200 p-4 px-6 flex items-center justify-between z-10 shadow-sm'>
+                  <div className='flex items-center gap-4'>
+                    <div className='relative'>
+                      <div className='w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white font-bold text-lg shadow-inner'>
                         {getOtherParticipant(selectedChat)?.charAt(0).toUpperCase()}
                       </div>
-                      <div>
-                        <h3 className='text-white font-semibold'>
-                          {getOtherParticipant(selectedChat)?.split('@')[0]}
-                        </h3>
-                        <p className='text-gray-400 text-xs'>
-                          {getOtherParticipant(selectedChat)}
-                        </p>
-                      </div>
+                      <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
                     </div>
-                    <div className='flex items-center gap-2'>
-                      <button className='text-gray-400 hover:text-white p-2 hover:bg-[#2a2a2a] rounded-full transition-all'>
-                        <Phone className='w-5 h-5' />
-                      </button>
-                      <button className='text-gray-400 hover:text-white p-2 hover:bg-[#2a2a2a] rounded-full transition-all'>
-                        <Video className='w-5 h-5' />
-                      </button>
-                      <button className='text-gray-400 hover:text-white p-2 hover:bg-[#2a2a2a] rounded-full transition-all'>
-                        <Info className='w-5 h-5' />
-                      </button>
-                      <button className='text-gray-400 hover:text-white p-2 hover:bg-[#2a2a2a] rounded-full transition-all'>
-                        <MoreVertical className='w-5 h-5' />
-                      </button>
+                    <div>
+                      <h3 className='text-slate-900 font-bold text-lg leading-tight'>
+                        {getOtherParticipant(selectedChat)?.split('@')[0]}
+                      </h3>
+                      <p className='text-slate-500 text-xs font-medium'>
+                        {getOtherParticipant(selectedChat)}
+                      </p>
                     </div>
+                  </div>
+                  <div className='flex items-center gap-1 sm:gap-2'>
+                    <button className='text-slate-400 hover:text-primary-600 p-2.5 hover:bg-primary-50 rounded-full transition-all'>
+                      <Phone className='w-5 h-5' />
+                    </button>
+                    <button className='text-slate-400 hover:text-primary-600 p-2.5 hover:bg-primary-50 rounded-full transition-all'>
+                      <Video className='w-5 h-5' />
+                    </button>
+                    <div className="w-px h-6 bg-slate-200 mx-1 hidden sm:block"></div>
+                    <button className='text-slate-400 hover:text-slate-700 p-2.5 hover:bg-slate-100 rounded-full transition-all hidden sm:block'>
+                      <Info className='w-5 h-5' />
+                    </button>
+                    <button className='text-slate-400 hover:text-slate-700 p-2.5 hover:bg-slate-100 rounded-full transition-all'>
+                      <MoreVertical className='w-5 h-5' />
+                    </button>
                   </div>
                 </div>
 
                 {/* Messages Container */}
                 <div
                   ref={messagesContainerRef}
-                  className='flex-1 overflow-y-auto p-4 space-y-2'
+                  className='flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 scrollbar-thin scrollbar-thumb-slate-200'
                 >
                   {messages.length === 0 ? (
                     <div className='flex flex-col items-center justify-center h-full text-center'>
-                      <MessageCircle className='w-16 h-16 text-gray-600 mb-4' />
-                      <p className='text-gray-400'>No messages yet</p>
-                      <p className='text-gray-600 text-sm mt-2'>Start the conversation!</p>
+                      <div className='w-20 h-20 bg-white shadow-sm rounded-full flex items-center justify-center mb-4'>
+                        <MessageCircle className='w-10 h-10 text-primary-400' />
+                      </div>
+                      <p className='text-slate-900 font-bold text-lg mb-1'>Say Hello!</p>
+                      <p className='text-slate-500'>Start the conversation with {getOtherParticipant(selectedChat)?.split('@')[0]}</p>
                     </div>
                   ) : (
                     messages.map((message) => (
@@ -299,57 +306,71 @@ const getUnreadCountSafe = (chat, userEmail) => {
                       />
                     ))
                   )}
-                  <div ref={messagesEndRef} />
+                  <div ref={messagesEndRef} className="h-4" />
                 </div>
 
                 {/* Message Input */}
-                <div className='bg-[#1a1a1a] border-t border-gray-800 p-4'>
-                  <div className='flex items-center gap-2 mb-2'>
-                    <button className='text-gray-400 hover:text-white p-2 hover:bg-[#2a2a2a] rounded-full transition-all'>
-                      <Paperclip className='w-5 h-5' />
-                    </button>
-                    <button className='text-gray-400 hover:text-white p-2 hover:bg-[#2a2a2a] rounded-full transition-all'>
-                      <ImageIcon className='w-5 h-5' />
-                    </button>
-                    <button className='text-gray-400 hover:text-white p-2 hover:bg-[#2a2a2a] rounded-full transition-all'>
-                      <Smile className='w-5 h-5' />
-                    </button>
-                  </div>
-                  <div className='flex items-center gap-2'>
-                    <textarea
-                      value={messageText}
-                      onChange={(e) => setMessageText(e.target.value)}
-                      onKeyPress={handleKeyPress}
-                      placeholder='Type a message...'
-                      rows={1}
-                      className='flex-1 px-4 py-3 bg-[#2a2a2a] text-white rounded-xl border border-gray-700 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/50 focus:outline-none transition-all resize-none'
-                      style={{ maxHeight: '120px' }}
-                    />
+                <div className='bg-white border-t border-slate-200 p-4 sm:px-6 shadow-[0_-4px_24px_-12px_rgba(0,0,0,0.05)] z-10'>
+                  <div className='flex items-end gap-3 max-w-4xl mx-auto'>
+                    
+                    <div className="flex gap-1 mb-2 hidden sm:flex">
+                      <button className='text-slate-400 hover:text-primary-600 p-2 hover:bg-primary-50 rounded-full transition-all'>
+                        <Paperclip className='w-5 h-5' />
+                      </button>
+                      <button className='text-slate-400 hover:text-primary-600 p-2 hover:bg-primary-50 rounded-full transition-all'>
+                        <ImageIcon className='w-5 h-5' />
+                      </button>
+                    </div>
+
+                    <div className='flex-1 bg-slate-50 border border-slate-200 rounded-2xl flex items-end p-1 transition-all focus-within:ring-4 focus-within:ring-primary-500/10 focus-within:border-primary-300 focus-within:bg-white'>
+                      <button className='text-slate-400 hover:text-primary-600 p-2.5 hover:bg-primary-50 rounded-full transition-all sm:hidden'>
+                        <Paperclip className='w-5 h-5' />
+                      </button>
+                      
+                      <textarea
+                        value={messageText}
+                        onChange={(e) => setMessageText(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        placeholder='Type a message...'
+                        rows={1}
+                        className='flex-1 max-h-32 px-3 py-3 bg-transparent text-slate-900 focus:outline-none resize-none'
+                        style={{ minHeight: '48px' }}
+                      />
+                      
+                      <button className='text-slate-400 hover:text-primary-600 p-2.5 hover:bg-primary-50 rounded-full transition-all hidden sm:block'>
+                        <Smile className='w-5 h-5' />
+                      </button>
+                    </div>
+
                     <button
                       onClick={sendMessage}
                       disabled={!messageText.trim() || sendingMessage}
-                      className='px-4 py-3 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2'
+                      className='w-12 h-12 flex-shrink-0 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm shadow-primary-600/20 mb-0.5'
                     >
                       {sendingMessage ? (
                         <Loader2 className='w-5 h-5 animate-spin' />
                       ) : (
-                        <Send className='w-5 h-5' />
+                        <Send className='w-5 h-5 ml-1' />
                       )}
                     </button>
                   </div>
                 </div>
               </>
             ) : (
-              <div className='flex-1 flex flex-col items-center justify-center text-center p-8'>
-                <MessageCircle className='w-20 h-20 text-gray-600 mb-4' />
-                <h3 className='text-2xl font-bold text-white mb-2'>Select a conversation</h3>
-                <p className='text-gray-400'>Choose from your existing conversations or start a new one</p>
+              <div className='flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-50/50'>
+                <div className='w-24 h-24 bg-white shadow-sm border border-slate-100 rounded-3xl flex items-center justify-center mb-6 rotate-3 hover:rotate-0 transition-transform'>
+                  <MessageCircle className='w-12 h-12 text-primary-500' />
+                </div>
+                <h3 className='text-3xl font-bold text-slate-900 mb-3'>Your Messages</h3>
+                <p className='text-slate-500 max-w-sm'>
+                  Select a conversation from the sidebar or start a new one to connect with peers and alumni.
+                </p>
               </div>
             )}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

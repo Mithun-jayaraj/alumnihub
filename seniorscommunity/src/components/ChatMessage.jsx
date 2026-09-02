@@ -10,32 +10,31 @@ const ChatMessage = ({ message, isOwnMessage }) => {
   };
 
   return (
-    <div className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'} mb-4`}>
+    <div className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'} group`}>
       <div
-        className={`max-w-[75%] rounded-2xl px-4 py-2 ${
+        className={`max-w-[80%] sm:max-w-[70%] rounded-2xl px-4 py-2.5 relative shadow-sm ${
           isOwnMessage
-            ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-white'
-            : 'bg-[#2a2a2a] text-white border border-gray-800'
+            ? 'bg-primary-600 text-white rounded-tr-sm'
+            : 'bg-white text-slate-800 border border-slate-100 rounded-tl-sm'
         }`}
       >
         {!isOwnMessage && (
-          <p className='text-xs text-gray-400 mb-1 font-semibold'>
+          <p className='text-xs text-slate-500 mb-1 font-semibold'>
             {message.senderName}
           </p>
         )}
         
-        <p className='break-words whitespace-pre-wrap'>{message.content}</p>
+        <p className='break-words whitespace-pre-wrap text-[15px] leading-relaxed'>{message.content}</p>
         
-        <div className={`flex items-center gap-1 justify-end mt-1 text-xs ${
-          isOwnMessage ? 'text-white/70' : 'text-gray-500'
+        <div className={`flex items-center gap-1.5 justify-end mt-1.5 text-[11px] font-medium ${
+          isOwnMessage ? 'text-primary-100' : 'text-slate-400'
         }`}>
-          <Clock className='w-3 h-3' />
           <span>{formatTime(message.createdAt)}</span>
           {isOwnMessage && (
             message.read ? (
-              <CheckCheck className='w-4 h-4 text-blue-400' />
+              <CheckCheck className='w-3.5 h-3.5 text-blue-200' />
             ) : (
-              <Check className='w-4 h-4' />
+              <Check className='w-3.5 h-3.5' />
             )
           )}
         </div>

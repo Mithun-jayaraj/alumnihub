@@ -149,36 +149,44 @@ const Profilecard = () => {
 
   if (!data) {
     return (
-      <>
+      <div className="min-h-screen bg-slate-50 font-sans">
         <Navbar />
-        <div className="min-h-screen bg-gradient-to-br from-[#121212] via-[#1a1a1a] to-[#121212] flex items-center justify-center">
-          <div className="text-center">
-            <AlertCircle className="w-16 h-16 text-orange-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-white mb-4">No profile data found</h2>
+        <div className="flex items-center justify-center p-8 mt-12">
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 text-center max-w-md w-full">
+            <div className="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <AlertCircle className="w-8 h-8 text-primary-500" />
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">No profile data found</h2>
+            <p className="text-slate-500 mb-6">We couldn't load this user's profile information.</p>
             <button
               onClick={() => navigate('/home')}
-              className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-all"
+              className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-all font-semibold w-full shadow-sm shadow-primary-600/20"
             >
               Back to Home
             </button>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-slate-50 font-sans">
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-[#121212] via-[#1a1a1a] to-[#121212] py-8 px-4 sm:px-6 lg:px-8">
+      <div className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div ref={contentRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             {/* Left Side - Profile Card */}
-            <div className="flex justify-center lg:justify-end lg:sticky lg:top-8">
+            <div className="flex justify-center lg:justify-end lg:sticky lg:top-24">
               <div className="w-full max-w-md">
-                <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-2xl border border-gray-800 shadow-2xl overflow-hidden">
-                  {/* Header with gradient */}
-                  <div className="bg-gradient-to-r from-orange-500 to-pink-500 h-24"></div>
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                  {/* Header with Cover Image */}
+                  <div 
+                    className="bg-primary-700 h-32 sm:h-48 relative bg-cover bg-center"
+                    style={{ backgroundImage: "url('/src/assets/profile_cover_1788374881248.jpg')" }}
+                  >
+                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
+                  </div>
                   
                   <div className="p-6 -mt-16 relative">
                     {/* Avatar */}
@@ -186,7 +194,7 @@ const Profilecard = () => {
                       {data?.githubdata?.avatar_url ? (
                         <img
                           src={data.githubdata.avatar_url}
-                          className="w-32 h-32 rounded-full border-4 border-[#1a1a1a] shadow-xl object-cover"
+                          className="w-32 h-32 rounded-full border-4 border-white shadow-md object-cover bg-white"
                           alt={`${data.githubdata.login}'s avatar`}
                           onError={(e) => {
                             e.target.onerror = null;
@@ -194,7 +202,7 @@ const Profilecard = () => {
                           }}
                         />
                       ) : (
-                        <div className="w-32 h-32 rounded-full border-4 border-[#1a1a1a] shadow-xl bg-gray-700 flex items-center justify-center text-4xl text-gray-400">
+                        <div className="w-32 h-32 rounded-full border-4 border-white shadow-md bg-slate-100 flex items-center justify-center text-4xl text-slate-400">
                           👤
                         </div>
                       )}
@@ -202,23 +210,23 @@ const Profilecard = () => {
 
                     {/* User Info */}
                     <div className="text-center space-y-3">
-                      <h1 className="text-2xl font-bold text-white">
+                      <h1 className="text-2xl font-bold text-slate-900">
                         {data.acadamicdata?.Name || "User"}
                       </h1>
                       
-                      <div className="inline-flex items-center gap-2 bg-orange-500/20 text-orange-400 px-4 py-2 rounded-full border border-orange-500/30">
-                        <span className="font-semibold">
+                      <div className="inline-flex items-center gap-2 bg-primary-50 text-primary-700 px-4 py-1.5 rounded-full border border-primary-100 text-sm font-semibold">
+                        <span>
                           {data.acadamicdata?.Year} - {data.acadamicdata?.Department}
                         </span>
                         <span>🎓</span>
                       </div>
 
                       {data.githubdata?.name && (
-                        <p className="text-gray-300 font-medium">{data.githubdata.name}</p>
+                        <p className="text-slate-600 font-medium">{data.githubdata.name}</p>
                       )}
                       
                       {data.githubdata?.bio && (
-                        <p className="text-gray-400 text-sm leading-relaxed">
+                        <p className="text-slate-500 text-sm leading-relaxed max-w-sm mx-auto">
                           {data.githubdata.bio}
                         </p>
                       )}
@@ -228,7 +236,7 @@ const Profilecard = () => {
                           href={data.githubdata.blog} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors text-sm"
+                          className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 transition-colors text-sm font-medium"
                         >
                           <ExternalLink className="w-4 h-4" />
                           {data.githubdata.blog}
@@ -237,12 +245,12 @@ const Profilecard = () => {
 
                       {/* Follow/Unfollow Button */}
                       {completeUser.data.id !== data?.acadamicdata?.Email && (
-                        <div className="pt-4">
+                        <div className="pt-4 px-2">
                           {!isFollow ? (
                             <button
                               disabled={load}
-                              className={`w-full rounded-lg py-3 text-white font-semibold transition-all ${
-                                load ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                              className={`w-full rounded-xl py-3 text-white font-semibold transition-all shadow-sm ${
+                                load ? 'bg-slate-300 text-slate-500 cursor-not-allowed' : 'bg-primary-600 hover:bg-primary-700 shadow-primary-600/20'
                               }`}
                               onClick={handleFollow}
                             >
@@ -252,20 +260,20 @@ const Profilecard = () => {
                                   Following...
                                 </div>
                               ) : (
-                                'Follow'
+                                '+ Follow'
                               )}
                             </button>
                           ) : (
                             <button
                               disabled={load}
-                              className={`w-full rounded-lg py-3 text-white font-semibold transition-all ${
-                                load ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-700 hover:bg-gray-600'
+                              className={`w-full rounded-xl py-3 font-semibold transition-all shadow-sm border-2 ${
+                                load ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
                               }`}
                               onClick={handleUnFollow}
                             >
                               {load ? (
                                 <div className='flex justify-center items-center gap-2'>
-                                  <Loader2Icon className="animate-spin w-5 h-5" />
+                                  <Loader2Icon className="animate-spin w-5 h-5 text-slate-400" />
                                   Unfollowing...
                                 </div>
                               ) : (
@@ -277,39 +285,38 @@ const Profilecard = () => {
                       )}
 
                       {/* Followers/Following Stats */}
-                      <div className="flex items-center justify-center gap-4 pt-4 border-t border-gray-700">
+                      <div className="flex items-center justify-center gap-6 pt-5 pb-1 border-t border-slate-100 mt-5">
                         <button
                           onClick={() => setActiveView('followers')}
-                          className="flex items-center gap-2 hover:text-orange-400 transition-colors group"
+                          className="flex flex-col items-center group"
                         >
-                          <UsersRound className="w-5 h-5" />
-                          <span className="font-semibold">{followerCount}</span>
-                          <span className="text-gray-400 group-hover:text-orange-400">
-                            followers
+                          <span className="font-bold text-lg text-slate-900 group-hover:text-primary-600 transition-colors">{followerCount}</span>
+                          <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">
+                            Followers
                           </span>
                         </button>
-                        <span className="text-gray-600">•</span>
+                        <div className="w-px h-8 bg-slate-200"></div>
                         <button
                           onClick={() => setActiveView('following')}
-                          className="flex items-center gap-2 hover:text-orange-400 transition-colors group"
+                          className="flex flex-col items-center group"
                         >
-                          <span className="font-semibold">{followingCount}</span>
-                          <span className="text-gray-400 group-hover:text-orange-400">
-                            following
+                          <span className="font-bold text-lg text-slate-900 group-hover:text-primary-600 transition-colors">{followingCount}</span>
+                          <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">
+                            Following
                           </span>
                         </button>
                       </div>
 
                       {/* Social Links */}
-                      <div className="flex justify-center gap-3 pt-4">
+                      <div className="flex justify-center gap-3 pt-5">
                         {linkedinUrl !== "#" && (
                           <a 
                             href={linkedinUrl} 
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-12 h-12 bg-white hover:bg-gray-100 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg"
+                            className="w-12 h-12 bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 rounded-full flex items-center justify-center transition-all duration-300 hover:-translate-y-1 shadow-sm"
                           >
-                            <Linkedin className="w-6 h-6" color="#0077B5" />
+                            <Linkedin className="w-5 h-5 text-[#0077B5]" />
                           </a>
                         )}
                         {githubUrl !== "#" && (
@@ -317,9 +324,9 @@ const Profilecard = () => {
                             href={githubUrl} 
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-12 h-12 bg-white hover:bg-gray-100 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg"
+                            className="w-12 h-12 bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 rounded-full flex items-center justify-center transition-all duration-300 hover:-translate-y-1 shadow-sm"
                           >
-                            <Github className="w-6 h-6" color="#000000" />
+                            <Github className="w-5 h-5 text-slate-900" />
                           </a>
                         )}
                         {leetcodeUrl !== "#" && (
@@ -327,17 +334,17 @@ const Profilecard = () => {
                             href={leetcodeUrl} 
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-12 h-12 bg-white hover:bg-gray-100 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg"
+                            className="w-12 h-12 bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 rounded-full flex items-center justify-center transition-all duration-300 hover:-translate-y-1 shadow-sm"
                           >
-                            <Code className="w-6 h-6" color="#FFA116" />
+                            <Code className="w-5 h-5 text-[#FFA116]" />
                           </a>
                         )}
                         {data.acadamicdata?.Email && (
                           <a 
                             href={`mailto:${data.acadamicdata.Email}`}
-                            className="w-12 h-12 bg-white hover:bg-gray-100 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg"
+                            className="w-12 h-12 bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 rounded-full flex items-center justify-center transition-all duration-300 hover:-translate-y-1 shadow-sm"
                           >
-                            <Mail className="w-6 h-6" color="#EA4335" />
+                            <Mail className="w-5 h-5 text-[#EA4335]" />
                           </a>
                         )}
                       </div>
@@ -346,9 +353,9 @@ const Profilecard = () => {
                       <div className="flex gap-3 pt-6">
                         <button 
                           onClick={reactToPrintFn}
-                          className="flex-1 bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 font-semibold shadow-lg hover:shadow-orange-500/50"
+                          className="flex-1 bg-white border-2 border-primary-600 text-primary-600 hover:bg-primary-50 px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 font-semibold shadow-sm"
                         >
-                          <Download className="w-5 h-5" />
+                          <Download className="w-4 h-4" />
                           Export
                         </button>
                         <WhatsappShareButton 
@@ -356,8 +363,8 @@ const Profilecard = () => {
                           title={`Check out ${data.acadamicdata?.Name}'s profile on Alumni Hub!`}
                           className="flex-1"
                         >
-                          <button className="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 font-semibold shadow-lg hover:shadow-green-500/50">
-                            <Share2 className="w-5 h-5" />
+                          <button className="w-full bg-primary-600 hover:bg-primary-700 text-white px-4 py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 font-semibold shadow-sm shadow-primary-600/20">
+                            <Share2 className="w-4 h-4" />
                             Share
                           </button>
                         </WhatsappShareButton>
@@ -373,19 +380,26 @@ const Profilecard = () => {
               {activeView === 'profile' ? (
                 <div className="w-full max-w-2xl space-y-8">
                   {/* Instagram-Style Blog Feed */}
-                  <div className="text-center space-y-4">
-                    <h2 className="text-3xl font-bold text-white flex items-center justify-center gap-3">
-                      <TrendingUp className="w-8 h-8 text-orange-400" />
+                  <div className="space-y-4">
+                    <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                      <TrendingUp className="w-6 h-6 text-primary-600" />
                       Posts & Activities
                     </h2>
                     
                     {loading ? (
                       <div className="space-y-4">
                         {[1, 2, 3].map((i) => (
-                          <div key={i} className="bg-[#1a1a1a] rounded-xl p-4 border border-gray-800 animate-pulse">
-                            <div className="h-6 bg-gray-700 rounded w-3/4 mb-3"></div>
-                            <div className="h-4 bg-gray-700 rounded w-full mb-2"></div>
-                            <div className="h-4 bg-gray-700 rounded w-5/6"></div>
+                          <div key={i} className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm animate-pulse">
+                            <div className="flex items-center gap-3 mb-4">
+                               <div className="w-10 h-10 rounded-full bg-slate-200"></div>
+                               <div className="flex-1">
+                                  <div className="h-4 bg-slate-200 rounded w-1/3 mb-2"></div>
+                                  <div className="h-3 bg-slate-200 rounded w-1/4"></div>
+                               </div>
+                            </div>
+                            <div className="h-48 bg-slate-200 rounded-xl mb-4"></div>
+                            <div className="h-4 bg-slate-200 rounded w-full mb-2"></div>
+                            <div className="h-4 bg-slate-200 rounded w-5/6"></div>
                           </div>
                         ))}
                       </div>
@@ -396,21 +410,21 @@ const Profilecard = () => {
                           {userBlogs.map((blog) => (
                             <div
                               key={blog._id}
-                              className="bg-[#1a1a1a] rounded-xl border border-gray-800 overflow-hidden hover:border-orange-400 transition-all duration-300 cursor-pointer group"
+                              className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:border-primary-300 hover:shadow-md transition-all duration-300 cursor-pointer group"
                               onClick={() => navigate(`/blog/${blog._id}`)}
                             >
                               {/* Post Header */}
-                              <div className="p-4 flex items-center gap-3 border-b border-gray-800">
+                              <div className="p-4 flex items-center gap-3 border-b border-slate-100">
                                 <img
                                   src={data.githubdata?.avatar_url || 'https://via.placeholder.com/40'}
                                   alt={data.acadamicdata?.Name}
-                                  className="w-10 h-10 rounded-full object-cover"
+                                  className="w-10 h-10 rounded-full object-cover border border-slate-200"
                                 />
                                 <div className="flex-1">
-                                  <h4 className="text-white font-semibold text-sm">
+                                  <h4 className="text-slate-900 font-bold text-sm">
                                     {data.acadamicdata?.Name}
                                   </h4>
-                                  <p className="text-gray-500 text-xs">
+                                  <p className="text-slate-500 text-xs font-medium">
                                     {formatDate(blog.createdAt)}
                                   </p>
                                 </div>
@@ -425,43 +439,43 @@ const Profilecard = () => {
                                   onError={(e) => e.target.style.display = 'none'}
                                 />
                               ) : (
-                                <div className="w-full h-64 bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center">
-                                  <BookOpen className="w-16 h-16 text-white opacity-50" />
+                                <div className="w-full h-64 bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
+                                  <BookOpen className="w-16 h-16 text-white opacity-40" />
                                 </div>
                               )}
 
                               {/* Post Content */}
-                              <div className="p-4">
+                              <div className="p-5">
                                 {/* Interaction Buttons */}
-                                <div className="flex items-center gap-4 mb-3">
-                                  <button className="flex items-center gap-1 text-gray-400 hover:text-red-500 transition-colors">
-                                    <Heart className="w-5 h-5" />
-                                    <span className="text-sm font-semibold">
+                                <div className="flex items-center gap-5 mb-4">
+                                  <button className="flex items-center gap-1.5 text-slate-500 hover:text-red-500 transition-colors">
+                                    <Heart className="w-6 h-6" />
+                                    <span className="text-sm font-bold">
                                       {blog.likes?.length || 0}
                                     </span>
                                   </button>
-                                  <button className="flex items-center gap-1 text-gray-400 hover:text-blue-500 transition-colors">
-                                    <MessageCircle className="w-5 h-5" />
-                                    <span className="text-sm font-semibold">
+                                  <button className="flex items-center gap-1.5 text-slate-500 hover:text-blue-500 transition-colors">
+                                    <MessageCircle className="w-6 h-6" />
+                                    <span className="text-sm font-bold">
                                       {blog.comments?.length || 0}
                                     </span>
                                   </button>
-                                  <div className="flex items-center gap-1 text-gray-400 ml-auto">
+                                  <div className="flex items-center gap-1.5 text-slate-400 ml-auto">
                                     <Eye className="w-5 h-5" />
-                                    <span className="text-sm">
+                                    <span className="text-sm font-medium">
                                       {blog.views || 0}
                                     </span>
                                   </div>
                                 </div>
 
                                 {/* Title */}
-                                <h3 className="text-white font-bold text-lg mb-2 line-clamp-2 group-hover:text-orange-400 transition-colors">
+                                <h3 className="text-slate-900 font-bold text-lg mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors">
                                   {blog.title}
                                 </h3>
 
                                 {/* Excerpt */}
                                 {blog.excerpt && (
-                                  <p className="text-gray-400 text-sm line-clamp-3 mb-3">
+                                  <p className="text-slate-600 text-sm line-clamp-2 mb-4 leading-relaxed">
                                     {blog.excerpt}
                                   </p>
                                 )}
@@ -472,7 +486,7 @@ const Profilecard = () => {
                                     {blog.tags.slice(0, 3).map((tag, index) => (
                                       <span
                                         key={index}
-                                        className="px-2 py-1 bg-orange-500/20 text-orange-400 rounded-full text-xs font-semibold"
+                                        className="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md text-xs font-semibold"
                                       >
                                         #{tag}
                                       </span>
@@ -488,17 +502,19 @@ const Profilecard = () => {
                         {userBlogs.length > 0 && (
                           <button
                             onClick={() => navigate('/blogs')}
-                            className="w-full px-6 py-3 bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 rounded-lg transition-all font-semibold border border-orange-500/30"
+                            className="w-full px-6 py-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl transition-all font-semibold shadow-sm text-sm"
                           >
                             View All {userBlogs.length} Posts
                           </button>
                         )}
                       </>
                     ) : (
-                      <div className="bg-[#1a1a1a] rounded-xl p-12 border border-gray-800">
-                        <BookOpen className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                        <p className="text-gray-400 text-lg">No posts yet</p>
-                        <p className="text-gray-500 text-sm mt-2">
+                      <div className="bg-white rounded-2xl p-10 border border-slate-200 text-center shadow-sm">
+                        <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                           <BookOpen className="w-8 h-8 text-slate-400" />
+                        </div>
+                        <p className="text-slate-900 font-bold text-lg mb-1">No posts yet</p>
+                        <p className="text-slate-500 text-sm max-w-sm mx-auto">
                           {data.acadamicdata?.Name} hasn't shared any content
                         </p>
                       </div>
@@ -507,19 +523,19 @@ const Profilecard = () => {
 
                   {/* LeetCode Stats */}
                   {data.userdata?.Leetcode && (
-                    <div className="text-center space-y-4">
-                      <h2 className="text-3xl font-bold text-white flex items-center justify-center gap-3">
-                        <Code className="w-8 h-8 text-orange-400" />
+                    <div className="space-y-4">
+                      <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <Code className="w-6 h-6 text-[#FFA116]" />
                         LeetCode Progress
                       </h2>
-                      <div className="bg-[#1a1a1a] rounded-2xl p-4 border border-gray-800 overflow-hidden">
+                      <div className="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 shadow-sm overflow-hidden">
                         <img
-                          src={`https://leetcard.jacoblin.cool/${data.userdata.Leetcode}?theme=dark&font=Nunito&ext=heatmap`}
+                          src={`https://leetcard.jacoblin.cool/${data.userdata.Leetcode}?theme=light&font=Inter&ext=heatmap`}
                           alt="LeetCode stats"
                           className="w-full h-auto rounded-lg"
                           onError={(e) => {
                             e.target.style.display = 'none';
-                            e.target.parentElement.innerHTML = '<p class="text-gray-400 py-8">LeetCode stats unavailable</p>';
+                            e.target.parentElement.innerHTML = '<p class="text-slate-500 text-center py-8">LeetCode stats unavailable</p>';
                           }}
                         />
                       </div>
@@ -528,48 +544,57 @@ const Profilecard = () => {
 
                   {/* GitHub Stats */}
                   {data.userdata?.Github && (
-                    <div className="text-center space-y-4">
-                      <h2 className="text-3xl font-bold text-white flex items-center justify-center gap-3">
-                        <Github className="w-8 h-8 text-orange-400" />
+                    <div className="space-y-4">
+                      <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <Github className="w-6 h-6 text-slate-700" />
                         GitHub Activity
                       </h2>
                       
                       {/* Contribution Graph */}
-                      <div className="bg-[#1a1a1a] rounded-2xl p-4 border border-gray-800 overflow-x-auto">
+                      <div className="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 shadow-sm overflow-x-auto">
                         <iframe
-                          className="w-full min-w-[300px] h-auto border-0 rounded-lg"
-                          src={`https://ghchart.rshah.org/${data.userdata.Github}`}
+                          className="w-full min-w-[300px] h-[150px] border-0 rounded-lg"
+                          src={`https://ghchart.rshah.org/0f172a/${data.userdata.Github}`}
                           title="GitHub Heatmap"
                           onError={(e) => e.target.style.display = 'none'}
                         />
                       </div>
 
                       {/* GitHub Stats Cards */}
-                      <div className="grid grid-cols-1 gap-4">
-                        <div className="bg-[#1a1a1a] rounded-2xl p-4 border border-gray-800 flex justify-center">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex justify-center col-span-1 md:col-span-2">
                           <img
-                            src={`https://streak-stats.demolab.com/?user=${data.userdata.Github}&count_private=true&theme=react&border_radius=10`}
+                            src={`https://streak-stats.demolab.com/?user=${data.userdata.Github}&count_private=true&theme=default&border_radius=10`}
                             alt="GitHub streak stats"
-                            className="max-w-full h-auto"
-                            onError={(e) => e.target.style.display = 'none'}
+                            className="max-w-full h-auto w-full object-contain"
+                            onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.parentElement.innerHTML = '<p class="text-slate-500 text-center py-8">Stats unavailable</p>';
+                            }}
                           />
                         </div>
 
-                        <div className="bg-[#1a1a1a] rounded-2xl p-4 border border-gray-800 flex justify-center">
+                        <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex justify-center">
                           <img
-                            src={`https://github-readme-stats.vercel.app/api?username=${data.userdata.Github}&show_icons=true&theme=react&rank_icon=github&border_radius=10`}
+                            src={`https://github-readme-stats.vercel.app/api?username=${data.userdata.Github}&show_icons=true&theme=default&rank_icon=github&border_radius=10`}
                             alt="GitHub stats"
-                            className="max-w-full h-auto"
-                            onError={(e) => e.target.style.display = 'none'}
+                            className="max-w-full h-auto object-contain"
+                            onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.parentElement.innerHTML = '<p class="text-slate-500 text-center py-8">Stats unavailable</p>';
+                            }}
                           />
                         </div>
 
-                        <div className="bg-[#1a1a1a] rounded-2xl p-4 border border-gray-800 flex justify-center">
+                        <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex justify-center">
                           <img
-                            src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${data.userdata.Github}&hide=HTML&langs_count=8&layout=compact&theme=react&border_radius=10`}
+                            src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${data.userdata.Github}&hide=HTML&langs_count=8&layout=compact&theme=default&border_radius=10`}
                             alt="Top languages"
-                            className="max-w-full h-auto"
-                            onError={(e) => e.target.style.display = 'none'}
+                            className="max-w-full h-auto object-contain"
+                            onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.parentElement.innerHTML = '<p class="text-slate-500 text-center py-8">Stats unavailable</p>';
+                            }}
                           />
                         </div>
                       </div>
@@ -582,7 +607,7 @@ const Profilecard = () => {
                   <div className="mb-6">
                     <button
                       onClick={() => setActiveView('profile')}
-                      className="text-orange-400 hover:text-orange-300 font-semibold flex items-center gap-2 transition-colors"
+                      className="text-primary-600 hover:text-primary-700 font-semibold flex items-center gap-2 transition-colors bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm"
                     >
                       ← Back to Profile
                     </button>
@@ -599,7 +624,7 @@ const Profilecard = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -89,174 +89,184 @@ const BlogList = () => {
   );
 
   return (
-    <>
+    <div className="min-h-screen bg-slate-50 font-sans">
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-[#121212] via-[#1a1a1a] to-[#121212] py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Header Section */}
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-white mb-4 flex items-center justify-center gap-3">
-              <TrendingUp className="w-12 h-12 text-orange-400" />
-              Alumni Blogs
-            </h1>
-            <p className="text-gray-400 text-lg">Share your knowledge and experiences</p>
-          </div>
+      <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        
+        {/* Header Section */}
+        <div className="text-center mb-12 py-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 flex items-center justify-center gap-3">
+            <TrendingUp className="w-10 h-10 text-primary-600" />
+            Alumni Feed
+          </h1>
+          <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+            Discover stories, knowledge, and experiences shared by the community.
+          </p>
+        </div>
 
-          {/* Search and Create Section */}
-          <div className="bg-[#1a1a1a] rounded-2xl p-6 mb-8 border border-gray-800">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1 relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search blogs by title, content, or tags..."
-                  className="w-full pl-12 pr-4 py-3 bg-[#2a2a2a] text-white rounded-xl border border-gray-700 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/50 focus:outline-none transition-all"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                />
-              </div>
-              <button
-                onClick={handleSearch}
-                className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl transition-all font-semibold"
-              >
-                Search
-              </button>
-              <button
-                onClick={() => navigate('/create-blog')}
-                className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl transition-all font-semibold flex items-center gap-2"
-              >
-                <PenSquare className="w-5 h-5" />
-                Write Blog
-              </button>
-            </div>
+        {/* Search and Create Section */}
+        <div className="bg-white rounded-2xl p-4 sm:p-6 mb-8 border border-slate-200 shadow-sm flex flex-col md:flex-row gap-4 items-center">
+          <div className="flex-1 w-full relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search posts by title, content, or tags..."
+              className="w-full pl-12 pr-4 py-3 bg-slate-50 text-slate-900 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+            />
           </div>
+          <div className="flex gap-3 w-full md:w-auto">
+            <button
+              onClick={handleSearch}
+              className="flex-1 md:flex-none px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all font-semibold"
+            >
+              Search
+            </button>
+            <button
+              onClick={() => navigate('/create-blog')}
+              className="flex-1 md:flex-none px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-all font-semibold flex items-center justify-center gap-2 shadow-sm"
+            >
+              <PenSquare className="w-5 h-5" />
+              Write Post
+            </button>
+          </div>
+        </div>
 
-          {/* Blog Grid */}
-          {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <SkeletonCard key={i} />
-              ))}
+        {/* Blog Grid */}
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        ) : blogs.length === 0 ? (
+          <div className="bg-white rounded-2xl border border-slate-200 p-16 text-center shadow-sm">
+            <div className="w-20 h-20 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-6">
+              <PenSquare className="w-10 h-10 text-primary-500" />
             </div>
-          ) : blogs.length === 0 ? (
-            <div className="text-center py-20">
-              <PenSquare className="w-20 h-20 text-gray-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-300 mb-2">No blogs found</h3>
-              <p className="text-gray-500 mb-6">Be the first to share your story!</p>
-              <button
-                onClick={() => navigate('/create-blog')}
-                className="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl transition-all font-semibold"
-              >
-                Create Your First Blog
-              </button>
-            </div>
-          ) : (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {blogs.map((blog) => (
-                  <div
-                    key={blog._id}
-                    className="bg-[#1a1a1a] rounded-xl border border-gray-800 overflow-hidden hover:border-orange-400 transition-all duration-300 cursor-pointer group"
-                    onClick={() => navigate(`/blog/${blog._id}`)}
-                  >
-                    {/* Cover Image */}
-                    {blog.coverImage ? (
+            <h3 className="text-2xl font-bold text-slate-900 mb-2">No posts found</h3>
+            <p className="text-slate-500 mb-8 max-w-md mx-auto">
+              There are no posts here yet. Be the first to share your thoughts, projects, or experiences with the community!
+            </p>
+            <button
+              onClick={() => navigate('/create-blog')}
+              className="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-all font-semibold shadow-sm inline-flex items-center gap-2"
+            >
+              <PenSquare className="w-5 h-5" />
+              Create Your First Post
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {blogs.map((blog) => (
+                <div
+                  key={blog._id}
+                  className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg hover:border-primary-200 transition-all duration-300 cursor-pointer group flex flex-col"
+                  onClick={() => navigate(`/blog/${blog._id}`)}
+                >
+                  {/* Cover Image */}
+                  {blog.coverImage ? (
+                    <div className="relative h-52 overflow-hidden">
                       <img
                         src={blog.coverImage}
                         alt={blog.title}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                    ) : (
-                      <div className="w-full h-48 bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center">
-                        <PenSquare className="w-16 h-16 text-white opacity-50" />
+                    </div>
+                  ) : (
+                    <div className="h-52 bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
+                      <PenSquare className="w-16 h-16 text-white/30" />
+                    </div>
+                  )}
+
+                  <div className="p-6 flex flex-col flex-grow">
+                    {/* Tags */}
+                    {blog.tags && blog.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {blog.tags.slice(0, 3).map((tag, index) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-medium border border-primary-100"
+                          >
+                            {tag}
+                          </span>
+                        ))}
                       </div>
                     )}
 
-                    <div className="p-6">
-                      {/* Tags */}
-                      {blog.tags && blog.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mb-3">
-                          {blog.tags.slice(0, 3).map((tag, index) => (
-                            <span
-                              key={index}
-                              className="px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-xs font-semibold"
-                            >
-                              {tag}
-                            </span>
-                          ))}
+                    {/* Title */}
+                    <h3 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors">
+                      {blog.title}
+                    </h3>
+
+                    {/* Excerpt */}
+                    <p className="text-slate-500 text-sm mb-6 line-clamp-3 flex-grow">
+                      {blog.excerpt || blog.content.substring(0, 150) + '...'}
+                    </p>
+
+                    {/* Footer Info */}
+                    <div className="mt-auto pt-4 border-t border-slate-100">
+                      <div className="flex items-center justify-between text-sm text-slate-500 mb-3">
+                        <div className="flex items-center gap-2 font-medium text-slate-700">
+                          <User className="w-4 h-4 text-slate-400" />
+                          <span className="truncate max-w-[120px]">{blog.authorName}</span>
                         </div>
-                      )}
-
-                      {/* Title */}
-                      <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-orange-400 transition-colors">
-                        {blog.title}
-                      </h3>
-
-                      {/* Excerpt */}
-                      <p className="text-gray-400 text-sm mb-4 line-clamp-3">
-                        {blog.excerpt || blog.content.substring(0, 150) + '...'}
-                      </p>
-
-                      {/* Author and Date */}
-                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4 pb-4 border-b border-gray-800">
-                        <div className="flex items-center gap-2">
-                          <User className="w-4 h-4" />
-                          <span>{blog.authorName}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" />
+                        <div className="flex items-center gap-2 text-xs">
+                          <Calendar className="w-3.5 h-3.5" />
                           <span>{formatDate(blog.createdAt)}</span>
                         </div>
                       </div>
 
                       {/* Stats */}
-                      <div className="flex items-center gap-4 text-gray-400 text-sm">
-                        <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-4 text-slate-500 text-sm pt-2">
+                        <div className="flex items-center gap-1.5 hover:text-red-500 transition-colors">
                           <Heart className="w-4 h-4" />
-                          <span>{blog.likes?.length || 0}</span>
+                          <span className="font-medium">{blog.likes?.length || 0}</span>
                         </div>
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1.5 hover:text-blue-500 transition-colors">
                           <MessageCircle className="w-4 h-4" />
-                          <span>{blog.comments?.length || 0}</span>
+                          <span className="font-medium">{blog.comments?.length || 0}</span>
                         </div>
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1.5 ml-auto">
                           <Eye className="w-4 h-4" />
-                          <span>{blog.views || 0}</span>
+                          <span className="font-medium">{blog.views || 0}</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
-
-              {/* Pagination */}
-              {pagination && pagination.total > 1 && (
-                <div className="flex justify-center gap-2 mt-8">
-                  <button
-                    onClick={() => setPage(page - 1)}
-                    disabled={page === 1}
-                    className="px-4 py-2 bg-[#2a2a2a] text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#333333] transition-all"
-                  >
-                    Previous
-                  </button>
-                  <span className="px-4 py-2 bg-orange-500/20 text-orange-400 rounded-lg">
-                    Page {page} of {pagination.total}
-                  </span>
-                  <button
-                    onClick={() => setPage(page + 1)}
-                    disabled={page === pagination.total}
-                    className="px-4 py-2 bg-[#2a2a2a] text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#333333] transition-all"
-                  >
-                    Next
-                  </button>
                 </div>
-              )}
-            </>
-          )}
-        </div>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {pagination && pagination.total > 1 && (
+              <div className="flex justify-center items-center gap-4 mt-12">
+                <button
+                  onClick={() => setPage(page - 1)}
+                  disabled={page === 1}
+                  className="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 hover:border-slate-300 transition-all font-medium shadow-sm"
+                >
+                  Previous
+                </button>
+                <span className="px-5 py-2.5 bg-primary-50 text-primary-700 font-medium rounded-xl border border-primary-100">
+                  Page {page} of {pagination.total}
+                </span>
+                <button
+                  onClick={() => setPage(page + 1)}
+                  disabled={page === pagination.total}
+                  className="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 hover:border-slate-300 transition-all font-medium shadow-sm"
+                >
+                  Next
+                </button>
+              </div>
+            )}
+          </>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

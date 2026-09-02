@@ -131,38 +131,38 @@ const BlogDetail = () => {
   const isAuthor = blog.authorEmail === userDetails?.Email;
 
   return (
-    <>
+    <div className="min-h-screen bg-slate-50 font-sans">
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-[#121212] via-[#1a1a1a] to-[#121212] py-8 px-4 sm:px-6 lg:px-8">
+      <div className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
           <button
             onClick={() => navigate('/blogs')}
-            className="flex items-center gap-2 text-orange-400 hover:text-orange-300 mb-6 transition-colors"
+            className="flex items-center gap-2 text-slate-500 hover:text-slate-900 mb-8 transition-colors font-medium"
           >
             <ArrowLeft className="w-5 h-5" />
-            Back to Blogs
+            Back to Feed
           </button>
 
           {/* Blog Content */}
-          <article className="bg-[#1a1a1a] rounded-2xl border border-gray-800 overflow-hidden">
+          <article className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm mb-8">
             {/* Cover Image */}
             {blog.coverImage && (
               <img
                 src={blog.coverImage}
                 alt={blog.title}
-                className="w-full h-96 object-cover"
+                className="w-full h-[400px] object-cover"
               />
             )}
 
-            <div className="p-8">
+            <div className="p-8 md:p-12">
               {/* Tags */}
               {blog.tags && blog.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-6">
                   {blog.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-semibold"
+                      className="px-4 py-1.5 bg-primary-50 text-primary-700 rounded-full text-sm font-medium border border-primary-100"
                     >
                       {tag}
                     </span>
@@ -171,33 +171,35 @@ const BlogDetail = () => {
               )}
 
               {/* Title */}
-              <h1 className="text-4xl font-bold text-white mb-6">{blog.title}</h1>
+              <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-8 leading-tight tracking-tight">{blog.title}</h1>
 
               {/* Author Info and Actions */}
-              <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-800">
+              <div className="flex flex-wrap items-center justify-between gap-6 mb-8 pb-8 border-b border-slate-100">
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2 text-gray-400">
-                    <User className="w-5 h-5" />
-                    <span className="font-semibold">{blog.authorName}</span>
+                  <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 border border-slate-200">
+                    <User className="w-6 h-6" />
                   </div>
-                  <div className="flex items-center gap-2 text-gray-400">
-                    <Calendar className="w-5 h-5" />
-                    <span>{formatDate(blog.createdAt)}</span>
+                  <div>
+                    <div className="font-semibold text-slate-900">{blog.authorName}</div>
+                    <div className="flex items-center gap-2 text-sm text-slate-500 mt-1">
+                      <Calendar className="w-4 h-4" />
+                      <span>{formatDate(blog.createdAt)}</span>
+                    </div>
                   </div>
                 </div>
 
                 {isAuthor && (
-                  <div className="flex gap-2">
+                  <div className="flex gap-3">
                     <button
                       onClick={() => navigate(`/edit-blog/${id}`)}
-                      className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center gap-2 transition-all"
+                      className="px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl flex items-center gap-2 transition-all font-medium shadow-sm"
                     >
                       <Edit className="w-4 h-4" />
                       Edit
                     </button>
                     <button
                       onClick={handleDeleteBlog}
-                      className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg flex items-center gap-2 transition-all"
+                      className="px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 border border-red-100 rounded-xl flex items-center gap-2 transition-all font-medium"
                     >
                       <Trash2 className="w-4 h-4" />
                       Delete
@@ -206,90 +208,108 @@ const BlogDetail = () => {
                 )}
               </div>
 
+              {/* Blog Content */}
+              <div className="prose prose-slate max-w-none mb-12">
+                <div className="text-slate-700 text-lg leading-relaxed whitespace-pre-wrap">
+                  {blog.content}
+                </div>
+              </div>
+              
               {/* Stats and Like Button */}
-              <div className="flex items-center gap-6 mb-8">
+              <div className="flex items-center gap-6 pt-8 border-t border-slate-100">
                 <button
                   onClick={handleLike}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                  className={`flex items-center gap-2 px-6 py-3 rounded-xl transition-all shadow-sm font-medium ${
                     isLiked
-                      ? 'bg-red-500/20 text-red-400'
-                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                      ? 'bg-red-50 text-red-600 border border-red-100 hover:bg-red-100'
+                      : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
                   }`}
                 >
                   <Heart className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
-                  <span className="font-semibold">{blog.likes?.length || 0}</span>
+                  <span>{blog.likes?.length || 0} Likes</span>
                 </button>
-                <div className="flex items-center gap-2 text-gray-400">
-                  <MessageCircle className="w-5 h-5" />
-                  <span>{blog.comments?.length || 0} comments</span>
+                <div className="flex items-center gap-2 text-slate-500 font-medium bg-slate-50 px-4 py-3 rounded-xl border border-slate-100">
+                  <MessageCircle className="w-5 h-5 text-slate-400" />
+                  <span>{blog.comments?.length || 0}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-400">
-                  <Eye className="w-5 h-5" />
-                  <span>{blog.views || 0} views</span>
-                </div>
-              </div>
-
-              {/* Blog Content */}
-              <div className="prose prose-invert max-w-none">
-                <div className="text-gray-300 text-lg leading-relaxed whitespace-pre-wrap">
-                  {blog.content}
+                <div className="flex items-center gap-2 text-slate-500 font-medium bg-slate-50 px-4 py-3 rounded-xl border border-slate-100">
+                  <Eye className="w-5 h-5 text-slate-400" />
+                  <span>{blog.views || 0}</span>
                 </div>
               </div>
             </div>
           </article>
 
           {/* Comments Section */}
-          <div className="mt-8 bg-[#1a1a1a] rounded-2xl border border-gray-800 p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">
-              Comments ({blog.comments?.length || 0})
+          <div className="bg-white rounded-3xl border border-slate-200 p-8 md:p-12 shadow-sm">
+            <h2 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+              <MessageCircle className="w-6 h-6 text-primary-500" />
+              Discussion ({blog.comments?.length || 0})
             </h2>
 
             {/* Comment Form */}
-            <form onSubmit={handleComment} className="mb-8">
-              <textarea
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                placeholder="Add a comment..."
-                rows={3}
-                className="w-full px-4 py-3 bg-[#2a2a2a] text-white rounded-lg border border-gray-700 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/50 focus:outline-none transition-all resize-none mb-4"
-              />
-              <button
-                type="submit"
-                disabled={!commentText.trim()}
-                className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg flex items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
-              >
-                <Send className="w-5 h-5" />
-                Post Comment
-              </button>
+            <form onSubmit={handleComment} className="mb-10 relative">
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-full bg-primary-100 flex-shrink-0 flex items-center justify-center text-primary-700 font-bold border border-primary-200">
+                  {userDetails?.Name?.charAt(0) || <User className="w-5 h-5" />}
+                </div>
+                <div className="flex-1">
+                  <textarea
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    placeholder="Add to the discussion..."
+                    rows={3}
+                    className="w-full px-4 py-3 bg-slate-50 text-slate-900 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all resize-none shadow-sm"
+                  />
+                  <div className="flex justify-end mt-3">
+                    <button
+                      type="submit"
+                      disabled={!commentText.trim()}
+                      className="px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl flex items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-sm shadow-primary-600/20"
+                    >
+                      <Send className="w-4 h-4" />
+                      Post Comment
+                    </button>
+                  </div>
+                </div>
+              </div>
             </form>
 
             {/* Comments List */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               {blog.comments && blog.comments.length > 0 ? (
-                blog.comments.map((comment) => (
+                blog.comments.map((comment, index) => (
                   <div
-                    key={comment._id}
-                    className="bg-[#2a2a2a] rounded-lg p-4 border border-gray-800"
+                    key={comment._id || index}
+                    className="flex gap-4"
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-semibold text-white">{comment.userName}</span>
-                      <span className="text-sm text-gray-500">
-                        {formatDate(comment.createdAt)}
-                      </span>
+                    <div className="w-10 h-10 rounded-full bg-slate-100 flex-shrink-0 flex items-center justify-center text-slate-500 border border-slate-200">
+                      <User className="w-5 h-5" />
                     </div>
-                    <p className="text-gray-300">{comment.content}</p>
+                    <div className="flex-1 bg-slate-50 rounded-2xl rounded-tl-none p-5 border border-slate-100">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-semibold text-slate-900">{comment.userName}</span>
+                        <span className="text-xs font-medium text-slate-400">
+                          {formatDate(comment.createdAt)}
+                        </span>
+                      </div>
+                      <p className="text-slate-700 leading-relaxed">{comment.content}</p>
+                    </div>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500 text-center py-8">
-                  No comments yet. Be the first to comment!
-                </p>
+                <div className="text-center py-12 bg-slate-50 rounded-2xl border border-slate-100 border-dashed">
+                  <MessageCircle className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+                  <p className="text-slate-500 font-medium">
+                    No comments yet. Start the conversation!
+                  </p>
+                </div>
               )}
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

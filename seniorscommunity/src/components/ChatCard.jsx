@@ -58,20 +58,20 @@ const ChatCard = ({ chat, currentUserEmail, onClick, isActive }) => {
   return (
     <div
       onClick={onClick}
-      className={`p-4 cursor-pointer transition-all duration-200 border-l-4 ${
+      className={`px-4 py-3 mx-2 my-1 rounded-xl cursor-pointer transition-all duration-200 border ${
         isActive
-          ? 'bg-[#2a2a2a] border-orange-400'
-          : 'bg-[#1a1a1a] border-transparent hover:bg-[#2a2a2a] hover:border-gray-700'
+          ? 'bg-primary-50 border-primary-100 shadow-sm'
+          : 'bg-white border-transparent hover:bg-slate-50 hover:border-slate-200'
       }`}
     >
-      <div className='flex items-center gap-3'>
+      <div className='flex items-center gap-4'>
         {/* Avatar */}
         <div className='relative flex-shrink-0'>
-          <div className='w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg'>
+          <div className='w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white font-bold text-lg shadow-inner'>
             {getInitials(otherParticipant)}
           </div>
           {unreadCount > 0 && (
-            <div className='absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold border-2 border-[#1a1a1a]'>
+            <div className='absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-[10px] font-bold border-2 border-white shadow-sm'>
               {unreadCount > 9 ? '9+' : unreadCount}
             </div>
           )}
@@ -81,17 +81,18 @@ const ChatCard = ({ chat, currentUserEmail, onClick, isActive }) => {
         <div className='flex-1 min-w-0'>
           <div className='flex items-center justify-between mb-1'>
             <h4 className={`font-semibold truncate ${
-              unreadCount > 0 ? 'text-white' : 'text-gray-300'
+              unreadCount > 0 ? 'text-slate-900' : 'text-slate-700'
             }`}>
               {getDisplayName(otherParticipant)}
             </h4>
-            <span className='text-xs text-gray-500 flex items-center gap-1 flex-shrink-0 ml-2'>
-              <Clock className='w-3 h-3' />
+            <span className={`text-xs flex items-center gap-1 flex-shrink-0 ml-2 ${
+              unreadCount > 0 ? 'text-primary-600 font-medium' : 'text-slate-400'
+            }`}>
               {formatTime(chat.lastMessageTime)}
             </span>
           </div>
           <p className={`text-sm truncate ${
-            unreadCount > 0 ? 'text-white font-medium' : 'text-gray-400'
+            unreadCount > 0 ? 'text-slate-900 font-medium' : 'text-slate-500'
           }`}>
             {chat.lastMessage || 'No messages yet'}
           </p>

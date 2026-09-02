@@ -110,93 +110,120 @@ const Profile = () => {
   return (
     <>
       {userData ? (
-        <>
+        <div className="min-h-screen flex flex-col font-sans">
           <Toaster />
           <Navbar />
-          <div
-            className={`w-screen h-screen ${
-              darkmode ? "bg-black" : "bg-[#f8f8f8]"
-            } justify-center items-center flex flex-row-reverse min-2xl:flex max-lg:flex-col p-5 max-2xl:justify-between`}
-          >
-            <div className="w-[400px] h-[380px] bg-slate-50 rounded-xl flex flex-col space-y-5 justify-center items-center border border-black m-10 p-5">
-              {hide ? (
-                <>
-                  <div className="text-4xl font-bold" onClick={handleDarkmode}>
-                    Profile creation 🤩
-                  </div>
-                  <div>
-                    <span className="font-bold">Students & Alumni</span> (SIET)
-                  </div>
-                  <div>
-                    <button
-                      className="bg-blue-950 text-white p-3 rounded-xl"
-                      onClick={handleMonkey}
-                    >
-                      Create profile!
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <div className="w-full h-full flex flex-col justify-around items-center space-y-5">
-                  {loading ? (
-                    <div className="w-[400px] h-[380px] justify-center items-center flex">
-                      <div className="w-[50px] h-[50px] bg-orange-400 rounded-full animate-spin">
-                        <div className="w-[40px] h-[40px] bg-[#f8f8f8] rounded-full"></div>
+          <div className="flex-1 flex bg-slate-50">
+            
+            {/* Left Side - Image */}
+            <div className="hidden lg:flex w-1/2 relative bg-primary-900 overflow-hidden">
+              <div 
+                className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay"
+                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')" }}
+              ></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-primary-900/90 to-transparent"></div>
+              
+              <div className="relative z-10 flex flex-col justify-end p-12 text-white h-full">
+                <h2 className="text-3xl font-bold mb-4">Complete your professional identity</h2>
+                <p className="text-primary-100 text-lg max-w-md leading-relaxed">
+                  Add your social links and portfolio to help peers and recruiters find you easily within the network.
+                </p>
+              </div>
+            </div>
+            
+            {/* Right Side - Form */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-24">
+              <div className="w-full max-w-md">
+                
+                <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8">
+                  {hide ? (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                      <div className="text-center mb-8">
+                        <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                          <span className="text-3xl">🚀</span>
+                        </div>
+                        <h2 className="text-2xl font-bold text-slate-900 mb-2">Almost there!</h2>
+                        <p className="text-slate-500">Let's set up your profile to connect with the community.</p>
+                      </div>
+                      
+                      <div className="space-y-6">
+                        <button 
+                          onClick={handleMonkey}
+                          className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 rounded-xl transition-all shadow-sm shadow-primary-600/20"
+                        >
+                          Complete Profile
+                        </button>
                       </div>
                     </div>
                   ) : (
-                    <>
-                      <div className="text-2xl font-bold font-sans">
-                        Your Profile details! 🤩
-                      </div>
-                      <input
-                        ref={linkedinRef}
-                        type="text"
-                        className="border border-black pl-8 pr-8 pt-3 pb-3 rounded-lg w-full"
-                        placeholder="LinkedIn Profile Link*"
-                      />
-                      <input
-                        ref={leetcodeRef}
-                        type="text"
-                        className="border border-black pl-8 pr-8 pt-3 pb-3 rounded-lg w-full"
-                        placeholder="Leetcode username*"
-                      />
-                      <input
-                        ref={githubRef}
-                        type="text"
-                        className="border border-black pl-8 pr-8 pt-3 pb-3 rounded-lg w-full"
-                        placeholder="GitHub username*"
-                      />
-                      <button
-                        onClick={handleSubmit}
-                        className="bg-blue-950 p-3 rounded-lg text-white"
-                      >
-                        {load ? (
-                          <div className="animate-spin w-full h-full text-white">
-                            <Loader2 size={40} />
+                    <div className="animate-in fade-in slide-in-from-right-8 duration-500">
+                      {loading ? (
+                        <div className="py-12 flex flex-col items-center justify-center space-y-4">
+                          <div className="w-10 h-10 border-4 border-primary-100 border-t-primary-600 rounded-full animate-spin"></div>
+                          <p className="text-sm font-medium text-slate-500">Preparing workspace...</p>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="mb-8">
+                            <h2 className="text-2xl font-bold text-slate-900 mb-2">Professional Links</h2>
+                            <p className="text-slate-500 text-sm">Add your profiles to showcase your work.</p>
                           </div>
-                        ) : (
-                          "Show my profile 🎉"
-                        )}
-                      </button>
-                    </>
+                          
+                          <div className="space-y-4">
+                            <div>
+                              <label className="block text-sm font-medium text-slate-700 mb-1">LinkedIn URL</label>
+                              <input 
+                                ref={linkedinRef}
+                                type="text" 
+                                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all"
+                                placeholder="linkedin.com/in/username" 
+                              />
+                            </div>
+                            
+                            <div>
+                              <label className="block text-sm font-medium text-slate-700 mb-1">GitHub Username</label>
+                              <input 
+                                ref={githubRef}
+                                type="text" 
+                                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all" 
+                                placeholder="github-username"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-slate-700 mb-1">Leetcode Username</label>
+                              <input 
+                                ref={leetcodeRef}
+                                type="text" 
+                                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all" 
+                                placeholder="leetcode-username"
+                              />
+                            </div>
+                            
+                            <button 
+                              onClick={handleSubmit}
+                              disabled={load}
+                              className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 rounded-xl transition-all shadow-sm shadow-primary-600/20 mt-4 flex justify-center items-center h-[52px]"
+                            >
+                              {load ? (
+                                <Loader2 className="w-5 h-5 animate-spin" />
+                              ) : (
+                                "Save Profile"
+                              )}
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </div>
                   )}
                 </div>
-              )}
-            </div>
-            <div className="max-xl:w-[50%] max-sm:w-screen h-auto">
-              <img
-                src={Stdimg}
-                alt=""
-                className="w-[500px] h-[400px]"
-              />
+                
+              </div>
             </div>
           </div>
-        </>
+        </div>
       ) : (
-        <>
-          <Navbar />
-        </>
+        <Navbar />
       )}
     </>
   );
