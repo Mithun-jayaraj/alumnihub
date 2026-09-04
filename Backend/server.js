@@ -13,6 +13,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:3000",
+  "https://alumnihub-bay.vercel.app",
   process.env.CLIENT_URL,
 ].filter(Boolean);
 
@@ -41,74 +42,83 @@ app.use(express.json());
 const otpStorage = {};
 
 const EMAIL_USER = process.env.EMAIL_USER?.trim();
-const EMAIL_PASS = process.env.EMAIL_PASS?.replace(/\s+/g, '').trim();
+const EMAIL_PASS = process.env.EMAIL_PASS?.replace(/\s+/g, '').trim(); // Fallback for SMTP if needed
+const BREVO_API_KEY = process.env.BREVO_API_KEY?.trim();
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: EMAIL_USER,
-    pass: EMAIL_PASS,
-  },
-});
-
-if (!EMAIL_USER || !EMAIL_PASS) {
-  console.error("Missing EMAIL_USER or EMAIL_PASS in environment. OTP email will not send until configured.");
+// We are migrating to HTTP-based Brevo (Sendinblue) API to avoid Render SMTP timeouts.
+if (!BREVO_API_KEY) {
+  console.warn("Missing BREVO_API_KEY in environment. OTP emails will fail if using HTTP API.");
+}
+if (!EMAIL_USER) {
+  console.warn("Missing EMAIL_USER in environment. Must be a verified sender in Brevo.");
 }
 
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("Email transporter verification failed:", error.message || error);
-  } else {
-    console.log("Email transporter is ready to send OTP emails.");
-  }
-});
-
 // OTP Routes
-app.post("/generate-otp", (req, res) => {
+app.post("/generate-otp", async (req, res) => {
   const { email, Name } = req.body;
 
   if (!email) {
     return res.status(400).json({ message: "Email is required!" });
   }
 
-  if (!EMAIL_USER || !EMAIL_PASS) {
-    return res.status(500).json({ message: "Email service is not configured. Set EMAIL_USER and EMAIL_PASS in Backend/.env." });
+  if (!BREVO_API_KEY) {
+    return res.status(500).json({ message: "Email service is not configured. Missing BREVO_API_KEY." });
   }
 
   const otp = Math.floor(1000 + Math.random() * 9000).toString();
   otpStorage[email] = otp;
 
-  const mailOptions = {
-    from: EMAIL_USER || "no-reply@alumnis-hub.com",
-    to: email,
-    subject: "Your OTP for Alumnis-Hub",
-    html: `
-      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-        <h2 style="text-align: center; color: #6c24a4;">Welcome to Alumnis-Hub🎉</h2>
-        <p>Hello, ${Name}</p>
-        <p>Your OTP for verification is:</p>
-        <div style="text-align: center; margin: 20px 0; font-size: 24px; font-weight: bold; color: #4CAF50;">${otp}</div>
-        <p>This OTP is valid for <strong>10 minutes</strong>. Please do not share it with anyone.</p>
-        <hr style="border: 0; height: 1px; background: #ddd;">
-        <p style="font-size: 12px; color: #666;">If you did not request this, please ignore this email.</p>
-        <p style="text-align: center; font-size: 12px; color: #666;">&copy; 2024 Alumnis-Hub. All rights reserved.</p>
-      </div>
-    `,
-  };
+  const htmlContent = `
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+      <h2 style="text-align: center; color: #6c24a4;">Welcome to Alumnis-Hub🎉</h2>
+      <p>Hello, ${Name || 'User'}</p>
+      <p>Your OTP for verification is:</p>
+      <div style="text-align: center; margin: 20px 0; font-size: 24px; font-weight: bold; color: #4CAF50;">${otp}</div>
+      <p>This OTP is valid for <strong>10 minutes</strong>. Please do not share it with anyone.</p>
+      <hr style="border: 0; height: 1px; background: #ddd;">
+      <p style="font-size: 12px; color: #666;">If you did not request this, please ignore this email.</p>
+      <p style="text-align: center; font-size: 12px; color: #666;">&copy; 2024 Alumnis-Hub. All rights reserved.</p>
+    </div>
+  `;
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error("Error sending email:", error.message || error);
+  try {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'api-key': BREVO_API_KEY,
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        sender: { 
+          name: "Alumnis-Hub", 
+          email: EMAIL_USER || "no-reply@alumnis-hub.com" 
+        },
+        to: [{ email: email, name: Name || 'User' }],
+        subject: "Your OTP for Alumnis-Hub",
+        htmlContent: htmlContent
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("Error from Brevo API:", errorData);
       return res.status(500).json({
         message: "Unable to send verification email. Please try again.",
         emailSent: false,
       });
     }
-    console.log("OTP email sent successfully.");
-    res.status(200).json({ message: "OTP sent successfully!", otp, emailSent: true });
-  });
+
+    console.log("OTP email sent successfully via Brevo HTTP API.");
+    // Security: Do NOT return the OTP to the frontend
+    res.status(200).json({ message: "OTP sent successfully!", emailSent: true });
+  } catch (error) {
+    console.error("Network error sending email:", error.message || error);
+    res.status(500).json({
+      message: "Network error when connecting to email service.",
+      emailSent: false,
+    });
+  }
 });
 
 const chatRoutes = require('./Route/chatRoutes');
