@@ -177,7 +177,7 @@ const getUnreadCountSafe = (chat, userEmail) => {
   if (loading) {
     return (
       <>
-        <Navbar />
+        <div className="relative z-20"><Navbar /></div>
         <div className='min-h-screen bg-gradient-to-br from-[#121212] via-[#1a1a1a] to-[#121212] flex items-center justify-center'>
           <Loader2 className='w-12 h-12 text-orange-400 animate-spin' />
         </div>
@@ -186,10 +186,11 @@ const getUnreadCountSafe = (chat, userEmail) => {
   }
 
   return (
-    <div className='h-screen bg-slate-50 flex flex-col font-sans overflow-hidden'>
-      <Navbar />
+    <div className='h-screen flex flex-col font-sans overflow-hidden relative' style={{ backgroundImage: `url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")`, backgroundSize: "cover", backgroundPosition: "center" }}>
+      <div className="absolute inset-0 bg-slate-50/70 backdrop-blur-sm z-0"></div>
+      <div className="relative z-20"><Navbar /></div>
       
-      <div className='flex-1 flex overflow-hidden'>
+      <div className='flex-1 flex overflow-hidden relative z-10'>
         {/* Main Chat Area */}
         <div className='flex-1 flex overflow-hidden max-w-[1600px] mx-auto w-full border-x border-slate-200 bg-white shadow-sm'>
           
