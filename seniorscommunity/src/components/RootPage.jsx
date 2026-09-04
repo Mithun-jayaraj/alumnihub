@@ -26,27 +26,47 @@ const RootPage = () => {
   const [datu,setdatu]=useState(null);
   const [correct,Setcorrect]=useState(false);
   
-  const handleChangeOTP = (newOTP) => {
+  const handleChangeOTP = async (newOTP) => {
     setOtp(newOTP);
-    if (newOTP === generatedOtp) {
-      const sendData=async(datu)=>{
-        try {
-          const res1= await axios.post('/api/v1/addUser',datu);
-          if(res1.status==201)
-          {
-           toast.success('Signed up successfully!');
-           setTimeout(()=>{
-            SetRedirect(true);
-            Setcorrect(true);
-           },1000);
+    if (newOTP.length === 4) {
+      try {
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
+        const response = await fetch(`${apiBaseUrl}/verify-otp`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: userdata.Email, otp: newOTP }),
+        });
+
+        if (response.ok) {
+          const sendData = async(datu) => {
+            try {
+              // Ensure we use the full API URL for production
+              const res1 = await axios.post(`${apiBaseUrl}/api/v1/addUser`, datu);
+              if(res1.status === 201 || res1.status === 200) {
+               toast.success('Signed up successfully!');
+               setTimeout(()=>{
+                SetRedirect(true);
+                Setcorrect(true);
+               },1000);
+              }
+            } catch (error) {
+              console.error(error);
+              toast.error('Signup error!');
+            }
           }
-        } catch (error) {
-          console.log(datu);
-          toast.error('Signup error!');
+          sendData(datu);
+        } else {
+          console.log("Incorrect OTP.");
+          toast.error("Incorrect OTP.");
         }
+      } catch (error) {
+        console.error("Error verifying OTP:", error);
+        toast.error("Error verifying OTP.");
       }
-      sendData(datu);
-    } else {
+    } else if (newOTP.length < 4) {
+      // Just logging when typing
       console.log("Incorrect OTP.");
     }
   };
