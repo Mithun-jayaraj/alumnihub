@@ -100,14 +100,13 @@ app.post("/generate-otp", (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.error("Error sending email:", error);
-      return res.status(200).json({
-        message: "OTP generated but email failed to send. Use OTP from response for now.",
-        otp,
+      console.error("Error sending email:", error.message || error);
+      return res.status(500).json({
+        message: "Unable to send verification email. Please try again.",
         emailSent: false,
       });
     }
-    console.log("OTP sent successfully:", info.response);
+    console.log("OTP email sent successfully.");
     res.status(200).json({ message: "OTP sent successfully!", otp, emailSent: true });
   });
 });

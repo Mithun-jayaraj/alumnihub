@@ -130,18 +130,17 @@ const RootPage = () => {
       const result = await response.json();
       if (response.ok) {
         setGeneratedOtp(result.otp);
-        setEmailSent(result.emailSent !== false);
-        setEmailDeliveryError(result.emailSent === false ? result.message : '');
-        console.log("Generated OTP:", result.otp);
+        setEmailSent(true);
+        setEmailDeliveryError('');
         setEmail(false);
       } else {
-        setEmail(true);
         setEmailSent(false);
         setEmailDeliveryError(result.message || 'Failed to generate OTP.');
       }
     } catch (error) {
       console.error("Error sending OTP:", error);
-      setEmail(true);
+      setEmailSent(false);
+      setEmailDeliveryError("Failed to connect to the server. Please try again.");
     }
   };
 
@@ -150,9 +149,7 @@ const RootPage = () => {
   };
 
   useEffect(() => {
-    const otp = Math.floor(1000 + Math.random() * 9000).toString();
-    setGeneratedOtp(otp);
-    console.log("Generated OTP:", otp);
+    // Component mounted
   }, []);
 
   let c = 0;
@@ -404,11 +401,11 @@ const RootPage = () => {
                   </p>
                   
                   {!emailSent && (
-                    <div className="mb-6 p-4 bg-amber-50 text-amber-800 border border-amber-200 rounded-xl text-sm flex gap-3 items-start">
+                    <div className="mb-6 p-4 bg-red-50 text-red-800 border border-red-200 rounded-xl text-sm flex gap-3 items-start">
                       <span className="text-lg">⚠️</span>
                       <div>
                         <p className="font-medium">Email delivery failed</p>
-                        <p className="opacity-80">Please use the OTP printed in your backend server console to continue.</p>
+                        <p className="opacity-80">{emailDeliveryError || 'Unable to send verification email. Please try again.'}</p>
                       </div>
                     </div>
                   )}
