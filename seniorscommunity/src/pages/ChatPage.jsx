@@ -358,11 +358,15 @@ const getUnreadCountSafe = (chat, userEmail) => {
               </>
             ) : (
               <div className='flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-50/50'>
-                <div className='w-24 h-24 bg-white shadow-sm border border-slate-100 rounded-3xl flex items-center justify-center mb-6 rotate-3 hover:rotate-0 transition-transform'>
-                  <MessageCircle className='w-12 h-12 text-primary-500' />
+                <div className="relative mb-10 w-64 h-64 md:w-80 md:h-80">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-primary-100 rounded-full blur-3xl opacity-70"></div>
+                  <img src="https://images.unsplash.com/photo-1577563908411-50cb98976fea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Messages" className="w-full h-full object-cover rounded-full shadow-2xl relative z-10 border-8 border-white" />
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-white rounded-full shadow-xl flex items-center justify-center z-20 border-4 border-slate-50 animate-bounce" style={{ animationDuration: '3s' }}>
+                    <MessageCircle className='w-10 h-10 text-primary-500 fill-primary-100' />
+                  </div>
                 </div>
-                <h3 className='text-3xl font-bold text-slate-900 mb-3'>Your Messages</h3>
-                <p className='text-slate-500 max-w-sm'>
+                <h3 className='text-4xl font-extrabold text-slate-900 mb-4 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-purple-600'>Your Messages</h3>
+                <p className='text-slate-500 max-w-md text-lg opacity-80 leading-relaxed'>
                   Select a conversation from the sidebar or start a new one to connect with peers and alumni.
                 </p>
               </div>

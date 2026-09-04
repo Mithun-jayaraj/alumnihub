@@ -229,21 +229,21 @@ const Home = () => {
 
   // Enhanced User Card Component
   const EnhancedUserCard = ({ user }) => (
-    <div className='bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-2xl border border-gray-800 overflow-hidden hover:border-orange-400 transition-all duration-300 group'>
+    <div className='bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-orange-400 transition-all duration-300 group'>
       <div className='h-24 bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 relative'>
         <div className='absolute -bottom-12 left-1/2 transform -translate-x-1/2'>
-          <div className='w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-3xl border-4 border-[#1a1a1a] shadow-xl'>
+          <div className='w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-3xl border-4 border-white shadow-xl'>
             {user.Name.charAt(0)}
           </div>
         </div>
       </div>
 
       <div className='pt-16 px-6 pb-6 text-center'>
-        <h3 className='text-white font-bold text-xl mb-1 group-hover:text-orange-400 transition-colors'>
+        <h3 className='text-slate-900 font-bold text-xl mb-1 group-hover:text-orange-400 transition-colors'>
           {user.Name}
         </h3>
         
-        <div className='flex items-center justify-center gap-2 text-gray-400 text-sm mb-3'>
+        <div className='flex items-center justify-center gap-2 text-slate-500 text-sm mb-3'>
           <span className='bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full font-semibold'>
             {user.Department}
           </span>
@@ -252,7 +252,7 @@ const Home = () => {
           </span>
         </div>
 
-        <div className='flex items-center justify-center gap-2 text-gray-500 text-xs mb-4'>
+        <div className='flex items-center justify-center gap-2 text-slate-400 text-xs mb-4'>
           <Mail className='w-3 h-3' />
           <span className='truncate'>{user.Email}</span>
         </div>
@@ -266,7 +266,7 @@ const Home = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className='w-8 h-8 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-all'
+                className='w-8 h-8 bg-slate-100 text-slate-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-all'
               >
                 <Github className='w-4 h-4 text-white' />
               </a>
@@ -319,9 +319,9 @@ const Home = () => {
     return (
       <>
         <Navbar />
-        <div className='min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#121212] via-[#1a1a1a] to-[#121212]'>
+        <div className='min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-50 via-white to-purple-50'>
           <Loader2Icon className='w-20 h-20 text-orange-400 animate-spin mb-4' />
-          <p className='text-gray-400 text-lg'>Loading your network...</p>
+          <p className='text-slate-500 text-lg'>Loading your network...</p>
         </div>
       </>
     );
@@ -330,36 +330,36 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className='min-h-screen bg-gradient-to-br from-[#121212] via-[#1a1a1a] to-[#121212] pb-8'>
+      <div className='min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 pb-8'>
         {/* Top Navigation Bar */}
-        <div className='sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-md border-b border-gray-800 shadow-lg'>
+        <div className='sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-lg'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4'>
             <div className='flex items-center justify-between gap-4'>
               {/* Profile Icon */}
               <div className='relative' ref={profileMenuRef}>
                 <button
                   onClick={() => setShowProfileMenu(!showProfileMenu)}
-                  className='flex items-center gap-3 px-4 py-2 bg-[#2a2a2a] hover:bg-[#333333] rounded-xl transition-all border border-gray-800 hover:border-orange-400'
+                  className='flex items-center gap-3 px-4 py-2 bg-slate-50 hover:bg-slate-100 rounded-xl transition-all border border-slate-200 hover:border-orange-400'
                 >
-                  <div className='w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center text-white font-bold'>
+                  <div className='w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center text-slate-900 font-bold'>
                     {storedUserDetails?.Name?.charAt(0)}
                   </div>
                   <div className='hidden sm:block text-left'>
-                    <div className='text-white font-semibold text-sm'>{storedUserDetails?.Name}</div>
-                    <div className='text-gray-400 text-xs'>{storedUserDetails?.Department}</div>
+                    <div className='text-slate-900 font-semibold text-sm'>{storedUserDetails?.Name}</div>
+                    <div className='text-slate-500 text-xs'>{storedUserDetails?.Department}</div>
                   </div>
-                  <ChevronDown className='w-4 h-4 text-gray-400' />
+                  <ChevronDown className='w-4 h-4 text-slate-500' />
                 </button>
 
                 {showProfileMenu && (
-                  <div className='absolute left-0 top-full mt-2 w-64 bg-[#1a1a1a] border border-gray-800 rounded-xl shadow-2xl overflow-hidden z-50'>
+                  <div className='absolute left-0 top-full mt-2 w-64 bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden z-50'>
                     <div className='p-2'>
                       <button
                         onClick={() => {
                           navigate('/userprofile');
                           setShowProfileMenu(false);
                         }}
-                        className='w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-[#2a2a2a] rounded-lg transition-all'
+                        className='w-full flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-slate-50 rounded-lg transition-all'
                       >
                         <UserCircle className='w-5 h-5 text-orange-400' />
                         View Profile
@@ -369,7 +369,7 @@ const Home = () => {
                           navigate('/blogs');
                           setShowProfileMenu(false);
                         }}
-                        className='w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-[#2a2a2a] rounded-lg transition-all'
+                        className='w-full flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-slate-50 rounded-lg transition-all'
                       >
                         <BookOpen className='w-5 h-5 text-blue-400' />
                         My Blogs
@@ -382,11 +382,11 @@ const Home = () => {
               {/* Search Bar */}
               <div className='flex-1 max-w-2xl'>
                 <div className='relative'>
-                  <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
+                  <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 w-5 h-5' />
                   <input
                     type="text"
                     placeholder='Search students, posts, topics...'
-                    className='w-full pl-12 pr-4 py-3 bg-[#2a2a2a] text-white rounded-xl border border-gray-700 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/50 focus:outline-none transition-all placeholder-gray-500'
+                    className='w-full pl-12 pr-4 py-3 bg-slate-50 text-white rounded-xl border border-slate-200 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/50 focus:outline-none transition-all placeholder-slate-400'
                     onChange={(e) => setSearchQuery(e.target.value)}
                     value={searchQuery}
                   />
@@ -396,11 +396,11 @@ const Home = () => {
               {/* Message Icon */}
               <button
                 onClick={() => navigate('/chats')}
-                className='relative px-4 py-3 bg-[#2a2a2a] hover:bg-[#333333] rounded-xl transition-all border border-gray-800 hover:border-blue-400'
+                className='relative px-4 py-3 bg-slate-50 hover:bg-slate-100 rounded-xl transition-all border border-slate-200 hover:border-blue-400'
               >
                 <MessageCircle className='w-6 h-6 text-blue-400' />
                 {unreadCount > 0 && (
-                  <span className='absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold'>
+                  <span className='absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-slate-900 text-xs rounded-full flex items-center justify-center font-bold'>
                     {unreadCount > 9 ? '9+' : unreadCount}
                   </span>
                 )}
@@ -413,8 +413,8 @@ const Home = () => {
                 onClick={() => setActiveTab('feed')}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all whitespace-nowrap ${
                   activeTab === 'feed'
-                    ? 'bg-orange-500 text-white'
-                    : 'bg-[#2a2a2a] text-gray-400 hover:text-white hover:bg-[#333333]'
+                    ? 'bg-orange-500 text-slate-900'
+                    : 'bg-slate-50 text-slate-500 hover:text-slate-700 hover:bg-slate-100'
                 }`}
               >
                 <HomeIcon className='w-5 h-5' />
@@ -424,19 +424,19 @@ const Home = () => {
                 onClick={() => setActiveTab('network')}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all whitespace-nowrap ${
                   activeTab === 'network'
-                    ? 'bg-orange-500 text-white'
-                    : 'bg-[#2a2a2a] text-gray-400 hover:text-white hover:bg-[#333333]'
+                    ? 'bg-orange-500 text-slate-900'
+                    : 'bg-slate-50 text-slate-500 hover:text-slate-700 hover:bg-slate-100'
                 }`}
               >
                 <Users className='w-5 h-5' />
                 Network
-                <span className='bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full'>
+                <span className='bg-orange-500 text-slate-900 text-xs px-2 py-0.5 rounded-full'>
                   {filterData.length}
                 </span>
               </button>
               <button
                 onClick={() => navigate('/blogs')}
-                className='flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all whitespace-nowrap bg-[#2a2a2a] text-gray-400 hover:text-white hover:bg-[#333333]'
+                className='flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all whitespace-nowrap bg-slate-50 text-slate-500 hover:text-slate-700 hover:bg-slate-100'
               >
                 <BookOpen className='w-5 h-5' />
                 Blogs
@@ -447,7 +447,7 @@ const Home = () => {
             {activeTab === 'network' && (
               <div className='flex flex-wrap gap-3 items-center mt-4'>
                 <select
-                  className='px-4 py-2 bg-[#2a2a2a] text-white rounded-lg border border-gray-700 focus:border-orange-400 text-sm'
+                  className='px-4 py-2 bg-slate-50 text-slate-900 rounded-lg border border-slate-200 focus:border-orange-400 text-sm'
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
                 >
@@ -460,7 +460,7 @@ const Home = () => {
                 </select>
 
                 <select
-                  className='px-4 py-2 bg-[#2a2a2a] text-white rounded-lg border border-gray-700 focus:border-orange-400 text-sm'
+                  className='px-4 py-2 bg-slate-50 text-slate-900 rounded-lg border border-slate-200 focus:border-orange-400 text-sm'
                   value={batch}
                   onChange={(e) => setBatch(e.target.value)}
                 >
@@ -482,7 +482,7 @@ const Home = () => {
                   </button>
                 )}
 
-                <div className='ml-auto text-gray-400 text-sm'>
+                <div className='ml-auto text-slate-500 text-sm'>
                   {filterData.length} found
                 </div>
               </div>
@@ -497,8 +497,8 @@ const Home = () => {
               {filterData.length === 0 ? (
                 <div className='col-span-full text-center py-20'>
                   <Users className='w-20 h-20 text-gray-600 mx-auto mb-4' />
-                  <h3 className='text-2xl font-bold text-white mb-2'>No students found</h3>
-                  <p className='text-gray-400'>Try adjusting your search filters</p>
+                  <h3 className='text-2xl font-bold text-slate-900 mb-2'>No students found</h3>
+                  <p className='text-slate-500'>Try adjusting your search filters</p>
                 </div>
               ) : (
                 filterData.map((item) => (
@@ -511,15 +511,15 @@ const Home = () => {
           {activeTab === 'feed' && (
             <div className='space-y-4'>
               {activities.map((activity) => (
-                <div key={activity.id} className='bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-2xl border border-gray-800 p-6'>
+                <div key={activity.id} className='bg-white rounded-2xl border border-slate-200 p-6'>
                   <div className='flex items-start gap-4'>
                     <img src={activity.avatar} alt={activity.user} className='w-12 h-12 rounded-full' />
                     <div className='flex-1'>
                       <div className='flex items-center gap-2 mb-2'>
-                        <span className='text-white font-semibold'>{activity.user}</span>
-                        <span className='text-gray-400 text-sm'>{activity.action}</span>
+                        <span className='text-slate-900 font-semibold'>{activity.user}</span>
+                        <span className='text-slate-500 text-sm'>{activity.action}</span>
                       </div>
-                      <div className='flex items-center gap-6 mt-4 text-gray-400'>
+                      <div className='flex items-center gap-6 mt-4 text-slate-500'>
                         <button className='flex items-center gap-2 hover:text-orange-400 text-sm'>
                           <ThumbsUp className='w-4 h-4' />
                           Like

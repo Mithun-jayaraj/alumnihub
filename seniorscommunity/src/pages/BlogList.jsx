@@ -143,11 +143,15 @@ const BlogList = () => {
           </div>
         ) : blogs.length === 0 ? (
           <div className="bg-white rounded-2xl border border-slate-200 p-16 text-center shadow-sm">
-            <div className="w-20 h-20 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-6">
-              <PenSquare className="w-10 h-10 text-primary-500" />
+            <div className="mx-auto mb-8 w-64 h-64 md:w-80 md:h-80 relative flex items-center justify-center">
+              <div className="absolute inset-0 bg-gradient-to-tr from-orange-100 to-purple-100 rounded-full opacity-60 blur-3xl"></div>
+              <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="No posts" className="w-full h-full object-cover rounded-[2rem] shadow-xl rotate-[-2deg] relative z-10 border-4 border-white" />
+              <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center rotate-[10deg] z-20 border border-slate-100">
+                <PenSquare className="w-10 h-10 text-primary-500" />
+              </div>
             </div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-2">No posts found</h3>
-            <p className="text-slate-500 mb-8 max-w-md mx-auto">
+            <h3 className="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">No posts found</h3>
+            <p className="text-slate-500 mb-8 max-w-md mx-auto text-lg opacity-80">
               There are no posts here yet. Be the first to share your thoughts, projects, or experiences with the community!
             </p>
             <button
