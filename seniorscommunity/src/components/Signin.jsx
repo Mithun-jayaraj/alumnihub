@@ -22,40 +22,42 @@ export const Signin = () => {
   return (
     <div className="min-h-screen flex flex-col font-sans">
       <Navbar />
-      <div className="flex-1 flex bg-slate-50">
+      <div 
+        className="flex-1 flex items-center relative overflow-hidden"
+        style={{ backgroundImage: `url(${AuthNetworking})`, backgroundSize: "cover", backgroundPosition: "center" }}
+      >
+        <div className="absolute inset-0 bg-slate-900/60 mix-blend-multiply z-0"></div>
         
-        {/* Left Side - Image */}
-        <div className="hidden lg:flex w-1/2 relative bg-primary-900 overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay"
-            style={{ backgroundImage: `url(${AuthNetworking})` }}
-          ></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-900/90 to-transparent"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10 py-12">
           
-          <div className="relative z-10 flex flex-col justify-end p-12 text-white h-full">
-            <h2 className="text-3xl font-bold mb-4">Welcome back to your community</h2>
-            <p className="text-primary-100 text-lg max-w-md leading-relaxed">
+          {/* Left Side - Text */}
+          <div className="w-full lg:w-1/2 text-white space-y-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight drop-shadow-md">
+              Welcome back to your <br/> <span className="text-primary-300">community</span>
+            </h1>
+            <p className="text-lg md:text-xl text-slate-200 max-w-lg leading-relaxed drop-shadow">
               Sign in to continue connecting with peers, exploring opportunities, and sharing your journey.
             </p>
           </div>
-        </div>
-        
-        {/* Right Side - Form */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-24">
-          <div className="w-full max-w-md">
+          
+          {/* Right Side - Form */}
+          <div className="w-full lg:w-5/12 max-w-md">
             
-            <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8">
+            <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl border border-white/20 p-8 sm:p-10 relative overflow-hidden">
+              {/* subtle top accent */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary-400 via-primary-500 to-indigo-600"></div>
+
               {Hide ? (
-                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 pt-4">
                   <div className="text-center mb-8">
-                    <h2 className="text-2xl font-bold text-slate-900 mb-2">Sign in</h2>
-                    <p className="text-slate-500">Students & Alumni (SIET)</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Sign in</h2>
+                    <p className="text-slate-500 text-sm md:text-base">Students & Alumni (SIET)</p>
                   </div>
                   
                   <div className="space-y-6">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Year of Passing</label>
-                      <select className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all appearance-none bg-white text-slate-900 cursor-pointer" required>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Year of Passing</label>
+                      <select className="w-full px-4 py-3.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 focus:outline-none transition-all appearance-none text-slate-900 font-medium cursor-pointer" required>
                         <option value="">Select your batch year...</option>
                         <option value="2024">2024</option>
                         <option value="2025">2025</option>
@@ -67,68 +69,68 @@ export const Signin = () => {
                     
                     <button 
                       onClick={HandleMonkey}
-                      className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 rounded-xl transition-all shadow-sm shadow-primary-600/20"
+                      className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-primary-600/30 hover:-translate-y-0.5"
                     >
                       Continue
                     </button>
                     
-                    <div className="text-center mt-6 text-sm text-slate-500">
+                    <div className="text-center mt-6 text-sm text-slate-500 font-medium">
                       New to Alumnis Hub?{' '}
-                      <Link to="/" className="font-medium text-primary-600 hover:text-primary-700 hover:underline">
+                      <Link to="/" className="font-semibold text-primary-600 hover:text-primary-700 hover:underline">
                         Register here
                       </Link>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="animate-in fade-in slide-in-from-right-8 duration-500">
+                <div className="animate-in fade-in slide-in-from-right-8 duration-500 pt-2">
                   {Loading ? (
-                    <div className="py-12 flex flex-col items-center justify-center space-y-4">
-                      <div className="w-10 h-10 border-4 border-primary-100 border-t-primary-600 rounded-full animate-spin"></div>
-                      <p className="text-sm font-medium text-slate-500">Preparing login...</p>
+                    <div className="py-12 flex flex-col items-center justify-center space-y-5">
+                      <div className="w-12 h-12 border-4 border-primary-100 border-t-primary-600 rounded-full animate-spin"></div>
+                      <p className="text-sm font-semibold text-slate-500">Preparing login...</p>
                     </div>
                   ) : (
                     <>
                       <button 
                         onClick={() => setHide(true)} 
-                        className="mb-6 text-sm text-slate-500 hover:text-slate-900 flex items-center gap-1 transition-colors"
+                        className="mb-6 text-sm font-semibold text-slate-500 hover:text-slate-900 flex items-center gap-1 transition-colors"
                       >
                         ← Back
                       </button>
                       
                       <div className="mb-8">
-                        <h2 className="text-2xl font-bold text-slate-900 mb-2">Enter credentials</h2>
+                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Enter credentials</h2>
                         <p className="text-slate-500 text-sm">Please sign in with your registered email.</p>
                       </div>
                       
-                      <form className="space-y-4">
+                      <form className="space-y-5">
                         <div>
-                          <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+                          <label className="block text-sm font-semibold text-slate-700 mb-1.5">Email Address</label>
                           <input 
                             type="email" 
-                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all bg-white text-slate-900 placeholder:text-slate-400"
+                            className="w-full px-4 py-3.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 focus:outline-none transition-all font-medium text-slate-900 placeholder:text-slate-400"
                             placeholder="your.email@srishakthi.ac.in" 
                           />
                         </div>
                         
                         <div>
-                          <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                          <label className="block text-sm font-semibold text-slate-700 mb-1.5">Password</label>
                           <input 
                             type="password" 
-                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:outline-none transition-all bg-white text-slate-900 placeholder:text-slate-400" 
+                            className="w-full px-4 py-3.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 focus:outline-none transition-all font-medium text-slate-900 placeholder:text-slate-400" 
                             placeholder="••••••••"
                           />
                         </div>
                         
                         <div className="flex justify-end mb-2">
-                          <a href="#" className="text-sm font-medium text-primary-600 hover:text-primary-700 hover:underline">
+                          <a href="#" className="text-sm font-semibold text-primary-600 hover:text-primary-700 hover:underline">
                             Forgot password?
                           </a>
                         </div>
                         
                         <button 
                           type="button"
-                          className="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 rounded-xl transition-all shadow-sm shadow-primary-600/20"
+                          className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-primary-600/30 hover:-translate-y-0.5 mt-4"
                         >
                           Sign In
                         </button>
@@ -138,7 +140,6 @@ export const Signin = () => {
                 </div>
               )}
             </div>
-            
           </div>
         </div>
       </div>
