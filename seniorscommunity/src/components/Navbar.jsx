@@ -56,7 +56,7 @@ export const Navbar = () => {
             </Link>
 
             {UserData && (
-              <div className="hidden md:flex space-x-1">
+              <div className="hidden md:flex space-x-8 h-16 ml-8">
                 {navLinks.map((link) => {
                   const Icon = link.icon;
                   const isActive = location.pathname === link.path;
@@ -64,13 +64,13 @@ export const Navbar = () => {
                     <Link
                       key={link.name}
                       to={link.path}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                      className={`flex items-center gap-2 h-full text-sm font-medium transition-colors border-b-2 px-1 ${
                         isActive 
-                        ? 'bg-primary-50 text-primary-700' 
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                        ? 'border-primary-600 text-primary-600' 
+                        : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
                       }`}
                     >
-                      <Icon size={18} />
+                      <Icon size={18} className={isActive ? 'text-primary-600' : 'text-slate-400'} />
                       {link.name}
                     </Link>
                   )

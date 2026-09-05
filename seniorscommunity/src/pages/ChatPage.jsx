@@ -187,15 +187,15 @@ const getUnreadCountSafe = (chat, userEmail) => {
 
   return (
     <div className='h-screen flex flex-col font-sans overflow-hidden relative' style={{ backgroundImage: `url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")`, backgroundSize: "cover", backgroundPosition: "center" }}>
-      <div className="absolute inset-0 bg-slate-50/70 backdrop-blur-sm z-0"></div>
+      <div className="absolute inset-0 bg-slate-900/40 mix-blend-multiply z-0"></div>
       <div className="relative z-20"><Navbar /></div>
       
       <div className='flex-1 flex overflow-hidden relative z-10'>
         {/* Main Chat Area */}
-        <div className='flex-1 flex overflow-hidden max-w-[1600px] mx-auto w-full border-x border-slate-200 bg-white shadow-sm'>
+        <div className='flex-1 flex overflow-hidden w-full'>
           
           {/* Chat List Sidebar */}
-          <div className='w-full sm:w-80 md:w-96 bg-white border-r border-slate-200 flex flex-col z-10 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)]'>
+          <div className='w-full sm:w-80 md:w-96 bg-white flex flex-col z-10 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.1)] h-full'>
             
             {/* Sidebar Header & Search */}
             <div className='p-4 border-b border-slate-100'>
@@ -247,7 +247,7 @@ const getUnreadCountSafe = (chat, userEmail) => {
           </div>
 
           {/* Chat Messages Area */}
-          <div className='flex-1 flex flex-col bg-slate-50/50 relative'>
+          <div className='flex-1 flex flex-col relative h-full bg-transparent'>
             {selectedChat ? (
               <>
                 {/* Chat Header */}
@@ -358,18 +358,34 @@ const getUnreadCountSafe = (chat, userEmail) => {
                 </div>
               </>
             ) : (
-              <div className='flex-1 flex flex-col items-center justify-center text-center p-8 bg-slate-50/50'>
-                <div className="relative mb-10 w-64 h-64 md:w-80 md:h-80">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-primary-100 rounded-full blur-3xl opacity-70"></div>
-                  <img src="https://images.unsplash.com/photo-1577563908411-50cb98976fea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Messages" className="w-full h-full object-cover rounded-full shadow-2xl relative z-10 border-8 border-white" />
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-white rounded-full shadow-xl flex items-center justify-center z-20 border-4 border-slate-50 animate-bounce" style={{ animationDuration: '3s' }}>
-                    <MessageCircle className='w-10 h-10 text-primary-500 fill-primary-100' />
+              <div className='flex-1 flex flex-col items-center justify-center p-8 relative'>
+                <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl border border-white/20 p-10 md:p-14 max-w-lg text-center animate-in fade-in zoom-in-95 duration-500 relative">
+                  {/* Subtle top accent */}
+                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary-400 via-primary-500 to-indigo-600 rounded-t-3xl"></div>
+                  
+                  <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg border border-slate-100 absolute -top-10 left-1/2 transform -translate-x-1/2">
+                    <MessageCircle className='w-8 h-8 text-primary-600' />
+                  </div>
+                  
+                  <h3 className='text-3xl font-bold text-slate-900 mb-3 mt-4'>Your Messages</h3>
+                  <p className='text-slate-500 text-base leading-relaxed mb-8 px-4'>
+                    Select a conversation from the sidebar or start a new one to connect with peers and alumni.
+                  </p>
+                  
+                  <button className="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3.5 px-8 rounded-xl transition-all shadow-lg shadow-primary-600/30 hover:-translate-y-0.5 inline-flex items-center gap-2">
+                    <MessageCircle className="w-5 h-5" />
+                    Start a Conversation
+                  </button>
+
+                  <div className="mt-8 text-xs font-medium text-slate-400">
+                    "Meaningful conversations lead to greater opportunities."
+                  </div>
+                  <div className="flex justify-center gap-2 mt-4">
+                    <div className="w-8 h-1 bg-primary-600 rounded-full"></div>
+                    <div className="w-8 h-1 bg-slate-200 rounded-full"></div>
+                    <div className="w-8 h-1 bg-slate-200 rounded-full"></div>
                   </div>
                 </div>
-                <h3 className='text-4xl font-extrabold text-slate-900 mb-4 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-purple-600'>Your Messages</h3>
-                <p className='text-slate-500 max-w-md text-lg opacity-80 leading-relaxed'>
-                  Select a conversation from the sidebar or start a new one to connect with peers and alumni.
-                </p>
               </div>
             )}
           </div>
