@@ -189,9 +189,10 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans">
-      <Navbar />
-      <div className="py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen font-sans relative" style={{ backgroundImage: `url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+      <div className="absolute inset-0 bg-white/85 backdrop-blur-[1px] z-0"></div>
+      <div className="relative z-20"><Navbar /></div>
+      <div className="py-8 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           {loading ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
